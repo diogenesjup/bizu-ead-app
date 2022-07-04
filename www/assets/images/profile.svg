@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="35.904" height="35.904" viewBox="0 0 35.904 35.904">
+  <g id="profile" transform="translate(0)">
+    <path id="Caminho_1555" data-name="Caminho 1555" d="M0,17.952A17.952,17.952,0,1,0,17.952,0,17.952,17.952,0,0,0,0,17.952Z" transform="translate(0)" fill="#f2f2f2"/>
+    <g id="User" transform="translate(9.593 8.415)">
+      <path id="Caminho_1556" data-name="Caminho 1556" d="M33.313,38.387V41.7a.511.511,0,0,1-.5.511H17.6a.511.511,0,0,1-.5-.511V38.387c0-2.676,3.63-4.847,8.107-4.847S33.313,35.711,33.313,38.387Z" transform="translate(-17.1 -23.139)" fill="none" stroke="#b4b4b4" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>
+      <ellipse id="Elipse_236" data-name="Elipse 236" cx="3.602" cy="3.467" rx="3.602" ry="3.467" transform="translate(4.505)" fill="none" stroke="#b4b4b4" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2"/>
+    </g>
+  </g>
+</svg>

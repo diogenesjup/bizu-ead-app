@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="89.845" height="89.845" viewBox="0 0 89.845 89.845">
+  <defs>
+    <filter id="background" x="0" y="0" width="89.845" height="89.845" filterUnits="userSpaceOnUse">
+      <feOffset dy="8" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feFlood flood-color="#8d6a42" flood-opacity="0.29"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="FloatingActionButton" transform="translate(-1980.756 -702.756)">
+    <g transform="matrix(1, 0, 0, 1, 1980.76, 702.76)" filter="url(#background)">
+      <path id="background-2" data-name="background" d="M2003.922,688h0a29.9,29.9,0,0,1,29.923,29.923h0a29.9,29.9,0,0,1-29.923,29.923h0A29.9,29.9,0,0,1,1974,717.923h0A29.9,29.9,0,0,1,2003.922,688Z" transform="translate(-1959 -681)" fill="#226a39"/>
+    </g>
+    <path id="add" d="M7.966,18.276V12.653H2.343a2.343,2.343,0,1,1,0-4.686H7.966V2.343a2.343,2.343,0,0,1,4.687,0V7.967h5.624a2.343,2.343,0,0,1,0,4.686H12.653v5.624a2.343,2.343,0,1,1-4.687,0Z" transform="translate(2015.509 729.509)" fill="#fff"/>
+  </g>
+</svg>

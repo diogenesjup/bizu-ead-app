@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="47.578" height="47.578" viewBox="0 0 47.578 47.578">
+  <g id="Grupo_253" data-name="Grupo 253" transform="translate(0 0)" opacity="0.95">
+    <path id="Caminho_207" data-name="Caminho 207" d="M23.789,0A23.789,23.789,0,1,1,0,23.789,23.789,23.789,0,0,1,23.789,0Z" transform="translate(0 0)" fill="#f2f2f2"/>
+    <g id="ic_camera_alt_24px" transform="translate(13.538 14.868)">
+      <circle id="Elipse_14" data-name="Elipse 14" cx="3.205" cy="3.205" r="3.205" transform="translate(6.811 6.811)" fill="#fff"/>
+      <path id="Caminho_89" data-name="Caminho 89" d="M9.012,2,7.179,4H4a2.009,2.009,0,0,0-2,2v12.02a2.009,2.009,0,0,0,2,2H20.03a2.009,2.009,0,0,0,2-2V6.007a2.009,2.009,0,0,0-2-2H16.855L15.022,2Zm3,15.025a5.008,5.008,0,1,1,5.008-5.008A5.01,5.01,0,0,1,12.017,17.025Z" transform="translate(-2 -2)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

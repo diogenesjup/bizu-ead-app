@@ -1,0 +1,7 @@
+{
+  "name": "com.diogenesjunior.pefisa",
+  "type": "custom",
+  "integrations": {
+    "cordova": {}
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "com.diogenesjunior.pefisa",
+  "version": "1.0.0",
+  "description": "Aplicativo para gerar cobranças PIX Pefisa",
+  "main": "index.html",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ https://github.com/diogenesjup/pefisa-app-pix.git"
+  },
+  "keywords": [
+    "pefisa pix"
+  ],
+  "author": "Diogenes Junior",
+  "license": "ISC",
+  "bugs": {
+    "url": " https://github.com/diogenesjup/pefisa-app-pix/issues"
+  },
+  "homepage": " https://github.com/diogenesjup/pefisa-app-pix#readme"
+}

@@ -1,0 +1,87 @@
+body.auth{
+    background: #fff;
+}
+.header-fixed{
+    top: 30px;
+}
+
+.brand-logo{
+    text-align: center;
+    padding: 30px;
+}
+
+.brand-logo img{
+    max-width: 100%;
+    width: 120px;
+    margin-bottom: 20px;
+    margin-top: -30px;
+}
+
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary:visited{
+    background-color: #023f88;
+    border-color: #023f88;
+}
+
+.menu-box-modal{
+    pointer-events: pointer !important; 
+}
+
+.page-title.page-title-fixed h1 img{
+    width: 69px;
+}
+
+.header.header-auto-show.header-fixed.header-logo-center.header-active img{
+    width: 55px;
+}
+
+.menu{
+    background: #fff;
+}
+
+.search-box input{
+    background-color: #F9F9F9;
+}
+
+
+
+
+.stories-home{
+    text-align: center;
+    margin-bottom: 30px;
+      margin-top: 30px;
+  }
+  
+  .stories-home .foto-categoria-stories{
+      position: relative;
+      display: block;
+      width: 75px;
+      height: 75px;
+      background: #f2f2f2;
+      border-radius: 100%;
+      margin-left: auto;
+      margin-right: auto;
+  }
+  
+  .stories-home .foto-categoria-stories a,
+  .stories-home .foto-categoria-stories a:hover{
+      display: block;
+      width: 100%;
+      height: 100%;
+      text-decoration: none;
+  }
+  
+  
+  .nome-categoria-stories{
+    text-align: center;
+  }
+  
+  .nome-categoria-stories a,
+  .nome-categoria-stories a:hover{
+      color: #000;
+      font-size: 12px;
+  }
