@@ -83,10 +83,10 @@ ysyss
     </div>
 
     <div id="footer-bar" class="footer-bar-6">
-        <a href="#"><i class="fa fa-calendar"></i><span>Agenda</span></a>
-        <a href="#"><i class="fa fa-search"></i><span>Pesquisar</span></a>
-        <a href="#" class="circle-nav active-nav"><i class="fa fa-plus"></i><span>Enviar</span></a>
-        <a href="#"><i class="fa fa-heart"></i><span>Favoritos</span></a>
+       
+        <a href="" onclick="location.href='dashboard.html'"><i class="fa fa-search"></i><span>Pesquisar</span></a>
+        <a href="" onclick="location.href='novo-contato.html'" class="circle-nav active-nav"><i class="fa fa-plus"></i><span>Novo</span></a>
+      
         <a href="#" data-menu="menu-main"><i class="fa fa-bars"></i><span>Mais</span></a>
     </div>
     
@@ -100,7 +100,7 @@ ysyss
     </div>
     <div class="page-title-clear"></div>
 
-    <div id="menu-main" class="menu menu-box-left rounded-0" data-menu-width="280" data-menu-active="nav-welcome" data-menu-load="js/views/menu-lateral.html"></div>
+    <div id="menu-main" class="menu menu-box-left rounded-0" data-menu-width="280" data-menu-active="nav-welcome" data-menu-load="js/views/menu-lateral.html?v=9"></div>
     <div id="menu-share" class="menu menu-box-bottom rounded-m"  data-menu-load="menu-share.html" data-menu-height="370"> </div>
     <div id="menu-colors" class="menu menu-box-bottom rounded-m" data-menu-load="menu-colors.html" data-menu-height="480"></div>
 
@@ -114,8 +114,9 @@ ysyss
                 <input type="text" class="border-0" placeholder="Faça uma pesquisa" data-search>
             </div>   
             <div class="search-results disabled-search-list">
-                <div class="list-group list-custom-large mb-0">
+                <div class="list-group list-custom-large mb-0" id="listaContatosPesquisa">
                    
+                    <!--
                     <a href="enviar.html" class="d-flex mb-3" data-filter-item data-filter-name="todos André andre an" style="padding-top:26px">
                         
                         <div>
@@ -129,19 +130,8 @@ ysyss
                             <i class="fa fa-angle-right opacity-20"></i>
                         </div>
                     </a>
-                    <a href="enviar.html" class="d-flex mb-3" data-filter-item data-filter-name="todos diogenes Diogenes" style="padding-top:26px">
-                        
-                        <div>
-                            <img src="images/pictures/6s.jpg" width="60" class="rounded-xl me-3" style="width: 60px;height: 60px;margin-right: 10px;margin-top: -17px;">
-                        </div>
-                        <div>
-                            <h5 class="font-16 font-600">Diogenes Junior</h5>
-                            <p class="line-height-s mt-1 opacity-70">(11) 9 4502-7877</p>
-                        </div>
-                        <div class="align-self-center ps-3">
-                            <i class="fa fa-angle-right opacity-20"></i>
-                        </div>
-                    </a>
+                    -->
+                    
 
                 </div>
             </div>
@@ -171,6 +161,16 @@ ysyss
                 </div>
             </div>
 
+            <div class="carregando-contatos text-center">
+                <i class="fa fa-sync fa-spin me-3"></i> carregando seus contatos
+            </div>
+            <div class="carregando-contatos-vazio text-center" style="display: none;">
+                Você ainda não tem nenhum contato cadastrado.
+            </div>
+
+            <div id="listaContatosListagem"></div>
+
+            <!--
             <a href="enviar.html" class="d-flex mb-3">
                 <div>
                     <img src="images/pictures/6s.jpg" width="60" class="rounded-xl me-3">
@@ -183,51 +183,14 @@ ysyss
                     <i class="fa fa-angle-right opacity-20"></i>
                 </div>
             </a>
+            -->
 
-            <a href="enviar.html" class="d-flex mb-3">
-                        
-                <div>
-                    <img src="images/pictures/6s.jpg" width="60" class="rounded-xl me-3">
-                </div>
-                <div>
-                    <h5 class="font-16 font-600">André Garrido</h5>
-                    <p class="line-height-s mt-1 opacity-70">(11) 9 8713-3509</p>
-                </div>
-                <div class="align-self-center ps-3">
-                    <i class="fa fa-angle-right opacity-20"></i>
-                </div>
-            </a>
-            <a href="enviar.html" class="d-flex mb-3">
-                
-                <div>
-                    <img src="images/pictures/6s.jpg" width="60" class="rounded-xl me-3">
-                </div>
-                <div>
-                    <h5 class="font-16 font-600">Diogenes Junior</h5>
-                    <p class="line-height-s mt-1 opacity-70">(11) 9 4502-7877</p>
-                </div>
-                <div class="align-self-center ps-3">
-                    <i class="fa fa-angle-right opacity-20"></i>
-                </div>
-            </a>
-            <a href="enviar.html" class="d-flex mb-3">
-                
-                <div>
-                    <img src="images/pictures/6s.jpg" width="60" class="rounded-xl me-3">
-                </div>
-                <div>
-                    <h5 class="font-16 font-600">Jorge Jesus</h5>
-                    <p class="line-height-s mt-1 opacity-70">(11) 9 4502-1111</p>
-                </div>
-                <div class="align-self-center ps-3">
-                    <i class="fa fa-angle-right opacity-20"></i>
-                </div>
-            </a>
+            
 
         </div>
         <!-- HISTORIES-->
 
-
+        <a href="#" id="msgErroAjax" data-menu="msgErroAjax"></a>
 
 
 
@@ -235,50 +198,55 @@ ysyss
         <p>&nbsp;</p>
         <p>&nbsp;</p>
         <p>&nbsp;</p>
-
+        <a href="#" id="erroGeral" data-menu="erroGeralMD"></a>
+        <a href="#" id="sucessoEnvioMsg" data-menu="sucessoEnvioMsgMD"></a>
 
     </div>
     <!-- End of Page Content-->
     <!-- All Menus, Action Sheets, Modals, Notifications, Toasts, Snackbars get Placed outside the <div class="page-content"> -->
 
-    <!-- Menu Share -->
-    <div id="menu-share" class="menu menu-box-bottom menu-box-detached">
-        <div class="menu-title mt-n1"><h1>Share the Love</h1><p class="color-highlight">Just Tap the Social Icon. We'll add the Link</p><a href="#" class="close-menu"><i class="fa fa-times"></i></a></div>
-        <div class="content mb-0">
-            <div class="divider mb-0"></div>
-            <div class="list-group list-custom-small list-icon-0">
-                <a href="auto_generated" class="shareToFacebook external-link">
-                    <i class="font-18 fab fa-facebook-square color-facebook"></i>
-                    <span class="font-13">Facebook</span>
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                <a href="auto_generated" class="shareToTwitter external-link">
-                    <i class="font-18 fab fa-twitter-square color-twitter"></i>
-                    <span class="font-13">Twitter</span>
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                <a href="auto_generated" class="shareToLinkedIn external-link">
-                    <i class="font-18 fab fa-linkedin color-linkedin"></i>
-                    <span class="font-13">LinkedIn</span>
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                <a href="auto_generated" class="shareToWhatsApp external-link">
-                    <i class="font-18 fab fa-whatsapp-square color-whatsapp"></i>
-                    <span class="font-13">WhatsApp</span>
-                    <i class="fa fa-angle-right"></i>
-                </a>
-                <a href="auto_generated" class="shareToMail external-link border-0">
-                    <i class="font-18 fa fa-envelope-square color-mail"></i>
-                    <span class="font-13">Email</span>
-                    <i class="fa fa-angle-right"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    
+        <div id="toast-carregando" class="toast toast-tiny toast-top bg-blue-dark text-center" data-bs-delay="3000" data-bs-autohide="true">
+            Processando...
+       </div>
 
 </div>
+
+    <!-- ERRO AJAX -->
+    <div id="msgErroAjax" class="menu menu-box-bottom rounded-m" 
+    data-menu-height="180" 
+    data-menu-effect="menu-over">
+        <div class="menu-title">
+        <i class="fa fa-times scale-box float-start me-3 ms-3 fa-4x color-red-dark"></i>
+        <p class="color-highlight">Oops</p>
+        <h1>Algo deu errado</h1>
+        <a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a>
+        </div>
+        <div class="content mt-0 mb-0">
+        <p class="pe-3">
+            Nossos servidores estão passando por dificuldades técnicas. Tente novamente em alguns minutos.
+        </p>        
+        </div>
+    </div> 
+    <!-- ERRO AJAX -->
+
+
+    <!-- ERRO GERAL -->
+    <div id="erroGeralMD" class="menu menu-box-bottom rounded-m" 
+    data-menu-height="180" 
+    data-menu-effect="menu-over">
+        <div class="menu-title">
+        <i class="fa fa-times scale-box float-start me-3 ms-3 fa-4x color-red-dark"></i>
+        <p class="color-highlight">Oops</p>
+        <h1>Algo deu errado</h1>
+        <a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a>
+        </div>
+        <div class="content mt-0 mb-0">
+        <p class="pe-3">
+            Nossos servidores estão passando por dificuldades técnicas. Tente novamente em alguns minutos.
+        </p>        
+        </div>
+    </div> 
+    <!-- ERRO GERAL -->
 
 <script type="text/javascript" src="assets/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="assets/js/tether.min.js"></script>
@@ -295,13 +263,7 @@ ysyss
 <script src="assets/js/dist/jquery.inputmask.bundle.js"></script>
 <script src="assets/js/dist/inputmask/phone-codes/phone.js"></script>
 
-<!-- ZUCK -->
-<script src="assets/dist/zuck.min.js"></script>
-<script type="text/javascript" src="assets/js/stories.js"></script>
 
-
-<!-- GOOGLE MAPS -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUGRiH2iey-c2WqqeegGF2qpxBDNLsmfQ&libraries=places&region=in"></script>
 
 <script type="text/javascript" src="js/commom/commom.js"></script> <!-- STANCIAS DE PLUGINS EXTERNOS -->
 <script src="js/controllers/Controllers.js"></script> <!-- CONTROLLEERS GUARDAM AS FUNCOES GERAIS -->
@@ -311,5 +273,18 @@ ysyss
 
 <script type="text/javascript" src="js/app.js"></script> <!-- SCRIPT GERAL DA APLICACAO -->
 
+<script>
+
+// CARREGAR CONTATOS
+setTimeout(function(){
+
+    app.models.getContatos();
+
+}, 2000);
+
+
+</script>
+
+<script src="cordova.js"></script>
 
 </body>

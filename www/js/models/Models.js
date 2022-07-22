@@ -11,370 +11,553 @@ class Models{
 
 
     // PROC LOGIN
-    procLogin(){
+    procLogin(form){
 
-       $("#btnViewLogin").html("Carregando...");
-       
-       event.preventDefault();
-      
-       var loginUsuario = $("#usuario").val();
-       var loginSenha = $("#senha").val();
+            var dadosForm = $(form).serialize();
 
-       var omniToken = localStorage.getItem("omniToken");
+            // CONFIGURAÇÕES AJAX VANILLA
+            let xhr = new XMLHttpRequest();
             
-            /*
-            // INICIO CHAMADA AJAX
-              var request = $.ajax({
+            xhr.open('POST', app.urlApi+'auth/login/',true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
-                  method: "POST",
-                  url: app.urlApiProxy+"login.php",
-                  data:{token:app.token,tokenSms:app.tokenSms,omniToken:omniToken,loginUsuario:loginUsuario,loginSenha:loginSenha}
-              
-              })
-              request.done(function (dados) {    
+            var params = "token="+app.token+
+                        "&"+dadosForm;
+            
+            // INICIO AJAX VANILLA
+            xhr.onreadystatechange = () => {
 
-                  $("#btnLoginEmailSenha").html("Login");        
+            if(xhr.readyState == 4) {
 
-                  console.log("%c RETORNO DO LOGIN","background:#ff0000;color:#fff;");
-                  console.log(dados);
+                if(xhr.status == 200) {
 
-                  var dadosUsuario = JSON.stringify(dados);
-                  
-                  if(dados.sucesso=="200"){
-                     
-                     if(dados.dados==null){
+                    console.log("OPERAÇÃO REALIZADA COM SUCESSO");
+                    console.log(JSON.parse(xhr.responseText));
 
-                        aviso("Oops! Algo deu errado","Login ou senha não encontrados. Verifique as informações inseridas e tente novamente.");
+                    var dados = JSON.parse(xhr.responseText);
 
-                     }else{
+                    if(dados.sucesso==403){
+
+                        document.getElementById('msgErroLoginSenha').click();
+
+                    }else{
                         
-                        localStorage.setItem("token-truck",dados.dados.token);
-                        localStorage.setItem("logado-ativo",dados.dados.usuario.ativo);
-                        localStorage.setItem("logado-cpf_cnpj",dados.dados.usuario.cpf_cnpj);
-                        localStorage.setItem("logado-dt_cadastro",dados.dados.usuario.dt_cadastro);
-                        localStorage.setItem("logado-dt_update",dados.dados.usuario.dt_update);
-                        localStorage.setItem("logado-id_cliente_crm",dados.dados.usuario.id_cliente_crm);
-                        localStorage.setItem("logado-id_usuario",dados.dados.usuario.id_usuario);
-                        localStorage.setItem("logado-nome",dados.dados.usuario.nome);
-                        localStorage.setItem("logado-senha",dados.dados.usuario.senha);
-                        localStorage.setItem("logado-tp_cliente",dados.dados.usuario.tp_cliente);
-                        localStorage.setItem("logado-usuario",dados.dados.usuario.usuario);
+                        // LOGIN OK
+                        app.login(dados.dados[0].id,dados.dados[0].email,dados.dados[0]);
 
-                        app.login();
-
-                     }
-                     
-                     $("#btnViewLogin").html("Login");
-
-                  }else{
-                     
-                     $(".form-control").val("");
-                     aviso("Oops! Login ou senha não encontrados","Verifique os dados inseridos e tente novamente!");
-                     $("#btnViewLogin").html("Login");
-
-                  }
-                  
-              });
-              request.fail(function (dados) {
-
-                   console.log("API NÃO DISPONÍVEL (procLogin)");
-                   console.log(dados);
-                   aviso("Oops! Algo deu errado","Nossos servidores estão passando por dificuldades técnicas, tente novamente em alguns minutos");
-                   $("#btnViewLogin").html("Login");
-
-              });
-              // FINAL CHAMADA AJAX
-            */
-           
-           // CONFIRMAR O LOGIN
-           app.login();
-
-    }
-
-    // PROC LOGIN SMS
-    procLoginSms(){
-
-      $("#btnViewLogin").html("Carregando...");
-       
-       event.preventDefault();
-
-       var loginUsuario = $("#loginUsuario").val();
-
-	          // INICIO CHAMADA AJAX
-              var request = $.ajax({
-
-                  method: "POST",
-                  url: app.urlApi+"token-sms-login.php",
-                  data:{token:app.token,tokenSms:app.tokenSms,loginUsuario:loginUsuario}
-              
-              })
-              request.done(function (dados) {        
-
-                  $("#btnViewLogin").html("Próximo");    
-
-                  console.log("%c RETORNO DO LOGIN","background:#ff0000;color:#fff;");
-                  console.log(dados);
-
-                  var dadosUsuario = JSON.stringify(dados);
-                  
-                  if(dados.sucesso=="200"){
-                  	 
-                  	 localStorage.setItem("dadosUsuario",dadosUsuario);
-                  	 //app.login(dados.id,dados.email,dadosUsuario);
-
-                     app.verificarCodigoSms();
-                  
-                  }else{
-                     
-                     //$(".form-control").val("");
-                     //aviso("Oops! Login ou senha não encontrados","Verifique os dados inseridos e tente novamente!");
-                     
-                     // SE O CELULAR NAO ESTIVER CADASTRADO
-                     // VAMOS DIRECIONAR O USUÁRIO PARA CONCLUIR O CADASTRO
+                    }
                     
-                     // SALVAR O CELULAR PARA O CADASTRO
-                     localStorage.setItem("celularCadastro",dados.celular);
+                }else{
+                
+                    console.log("SEM SUCESSO procLogin()");
+                    console.log(JSON.parse(xhr.responseText));
+                    document.getElementById('msgErroLoginSenha').click();
 
-                     app.cadastro();
+                }
 
-                  }
-                  
-              });
-              request.fail(function (dados) {
+            }
+        }; // FINAL AJAX VANILLA
 
-                   $("#btnViewLogin").html("Próximo"); 
-                     
-                   console.log("API NÃO DISPONÍVEL (procLogin)");
-                   console.log(dados);
-                   aviso("Oops! Algo deu errado","Nossos servidores estão passando por dificuldades técnicas, tente novamente em alguns minutos");
-
-              });
-              // FINAL CHAMADA AJAX
-
+        /* EXECUTA */
+        xhr.send(params);
+            
     }
 
-    // VERIFICAR O CÓDIGO SMS ENVIADO PELO USUÁRIO
-    verificarCodigoSms(){
-
-      $("#btnConfirmarCodigo").html("Processando...");
-
-      event.preventDefault();
-
-       var codigoSms = $("#codigoSms").val();
-
-              // INICIO CHAMADA AJAX
-              var request = $.ajax({
-
-                  method: "POST",
-                  url: app.urlApi+"verificar-sms.php",
-                  data:{token:app.token,codigoSms:codigoSms}
-              
-              })
-              request.done(function (dados) {         
-
-                  $("#btnConfirmarCodigo").html("Confirmar código.");   
-
-                  console.log("%c RETORNO DA VERIFICACAO DO CODIGO DE SMS","background:#ff0000;color:#fff;");
-                  console.log(dados);
-
-                  var dadosUsuario = JSON.stringify(dados);
-                  
-                  if(dados.sucesso=="200"){
-                     
-                     localStorage.setItem("dadosUsuario",dadosUsuario);
-                     app.login(dados.id,dados.email,dadosUsuario);
-                  
-                  }else{
-                     
-                     $(".form-control").val("");
-                     aviso("Oops! Código incorreto","Verifique o código recebido e tente novamente. Se ainda tiver dificuldades, tente entrar com o e-mail e senha.");
-                     
-                  }
-                  
-              });
-              request.fail(function (dados) {
-
-                   $("#btnConfirmarCodigo").html("Confirmar código."); 
-                     
-                   console.log("API NÃO DISPONÍVEL (verificarCodigoSms)");
-                   console.log(dados);
-                   aviso("Oops! Algo deu errado","Nossos servidores estão passando por dificuldades técnicas, tente novamente em alguns minutos");
-
-              });
-              // FINAL CHAMADA AJAX
-
-    }
+   
 
 
     // PROC CADASTRO
-    procCadastro(){
+    procCadastro(form){
 
-        $("#btnViewCadastro").html("Processando...");
+                var dadosForm = $(form).serialize();
 
-        event.preventDefault();
-
-        /*
-
-        var cpf = $('#cpf').val();
-  
-                // INICIO CHAMADA AJAX
-                var request = $.ajax({
-  
-                    method: "POST",
-                    url: app.urlApiProxy+"cadastro.php",
-                    data:{token:app.token,omniToken:app.omniToken,cpf:cpf}
+                // CONFIGURAÇÕES AJAX VANILLA
+                let xhr = new XMLHttpRequest();
                 
-                })
-                request.done(function (dados) {         
+                xhr.open('POST', app.urlApi+'auth/cadastro/',true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
-                    $("#btnViewCadastro").html("Cadastrar");   
-  
-                    console.log("%c RETORNO DO CADASTRO","background:#ff0000;color:#fff;");
-                    console.log(dados);
-  
-                    var dadosUsuario = JSON.stringify(dados);
-                    
-                    if(dados.sucesso=="200"){
+                var params = "token="+app.token+
+                            "&"+dadosForm;
+                
+                // INICIO AJAX VANILLA
+                xhr.onreadystatechange = () => {
 
-                     
-                            if(dados.dados.Cliente){
+                if(xhr.readyState == 4) {
 
-                                  // SALVAR DADOS RETORNADOS
+                    if(xhr.status == 200) {
 
-                                  localStorage.setItem("AreaAtendimentoID",dados.dados.Cliente.AreaAtendimentoID);
-                                  localStorage.setItem("AtendimentoVeiculo",dados.dados.Cliente.AtendimentoVeiculo);
-                                  localStorage.setItem("Bairro",dados.dados.Cliente.Bairro);
-                                  localStorage.setItem("BloqueioTotal",dados.dados.Cliente.BloqueioTotal);
-                                  localStorage.setItem("CEP",dados.dados.Cliente.CEP);
-                                  localStorage.setItem("CPFCNPJ",dados.dados.Cliente.CPFCNPJ);
-                                  localStorage.setItem("Celular",dados.dados.Cliente.Celular);
-                                  localStorage.setItem("Cidade",dados.dados.Cliente.Cidade);
-                                  localStorage.setItem("ClienteID",dados.dados.Cliente.ClienteID);
-                                  localStorage.setItem("CodClienteERP",dados.dados.Cliente.CodClienteERP);
-                                  localStorage.setItem("Complemento",dados.dados.Cliente.Complemento);
-                                  localStorage.setItem("ComunicacaoChip",dados.dados.Cliente.ComunicacaoChip);
-                                  localStorage.setItem("ComunicacaoSatelital",dados.dados.Cliente.ComunicacaoSatelital);
-                                  localStorage.setItem("DDCel",dados.dados.Cliente.DDCel);
-                                  localStorage.setItem("DDTel",dados.dados.Cliente.DDTel);
-                                  localStorage.setItem("DesbloqueioPortal",dados.dados.Cliente.DesbloqueioPortal);
-                                  localStorage.setItem("Email",dados.dados.Cliente.Email);
-                                  localStorage.setItem("EmissaoPV",dados.dados.Cliente.EmissaoPV);
-                                  localStorage.setItem("Endereco",dados.dados.Cliente.Endereco);
-                                  localStorage.setItem("Entidade",dados.dados.Cliente.Entidade);
-                                  localStorage.setItem("Estado",dados.dados.Cliente.Estado);
-                                  localStorage.setItem("InscricaoEstadual",dados.dados.Cliente.InscricaoEstadual);
-                                  localStorage.setItem("LojaERP",dados.dados.Cliente.LojaERP);
-                                  localStorage.setItem("Nome",dados.dados.Cliente.Nome);
-                                  localStorage.setItem("Numero",dados.dados.Cliente.Numero);
-                                  localStorage.setItem("ProprietarioID",dados.dados.Cliente.ProprietarioID);
-                                  localStorage.setItem("Telefone",dados.dados.Cliente.Telefone);
-                                  localStorage.setItem("vendedorid",dados.dados.Cliente.vendedorid);
+                        console.log("OPERAÇÃO REALIZADA COM SUCESSO");
+                        console.log(JSON.parse(xhr.responseText));
 
-                                  app.views.cadastroPasso2();
+                        var dados = JSON.parse(xhr.responseText);
 
-                                  if(dados.dados.Cliente.Email!=null){
+                        if(dados.sucesso==403){
 
-                                      $("#email").val(dados.dados.Cliente.Email);
+                            document.getElementById('msgCadastro').click();
 
-                                  }
+                        }else{
+                            
+                            // LOGIN OK
+                            //app.login(dados.dados[0].id,dados.dados[0].email,dados.dados[0]);
 
-                              
-                            }else{
+                            // CADASTRO OK
+                            localStorage.setItem("cadastroOk",2);
 
-                              aviso("Oops! Algo deu errado",dados.dados.Mensagem);
+                            location.href="index.html";
+                            
 
-                            }
-                       
-                       //localStorage.setItem("dadosUsuario",dadosUsuario);
-  
-                       // SE DEU TUDO CERTO, VAMOS LOGAR O USUÁRIO
-                       //app.login(dados.id,dados.email,dadosUsuario);
-                    
+                        }
+                        
                     }else{
-                       
-                       aviso("Oops! Esse e-mail já está cadastrado na nossa plataforma","Verifique os dados inseridos e tente novamente! Caso tenha esquecido sua senha, clique no link \"Esqueci Senha\" na tela de login.");
                     
+                        console.log("SEM SUCESSO procCadastro()");
+                        console.log(JSON.parse(xhr.responseText));
+                        document.getElementById('msgErroLoginSenha').click();
+
                     }
-                    
-                });
-                request.fail(function (dados) {
 
-                     $("#btnViewCadastro").html("Cadastrar"); 
-                       
-                     console.log("API NÃO DISPONÍVEL (procCadastro)");
-                     console.log(dados);
-                     aviso("Oops! Algo deu errado","Nossos servidores estão passando por dificuldades técnicas, tente novamente em alguns minutos");
-  
-                });
-                // FINAL CHAMADA AJAX
+                }
+            }; // FINAL AJAX VANILLA
 
-                */
-
-                // CONFIRMAR O LOGIN
-                app.login();
+            /* EXECUTA */
+            xhr.send(params);
   
   
-      }
+    }
 
 
     
 
 
 
+    // RESET DE SENHA  
+    procResetSenha(form){
 
-    procResetSenha(){
+                var dadosForm = $(form).serialize();
 
-              $("#btnViewResetarSenha").html("Processando...");
+                // CONFIGURAÇÕES AJAX VANILLA
+                let xhr = new XMLHttpRequest();
+                
+                xhr.open('POST', app.urlApi+'auth/reset-senha/',true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
-              event.preventDefault();
-               
-              var resetEmail = $("#resetEmail").val();
-              
-              /*
-              // INICIO CHAMADA AJAX
-              var request = $.ajax({
+                var params = "token="+app.token+
+                            "&"+dadosForm;
+                
+                // INICIO AJAX VANILLA
+                xhr.onreadystatechange = () => {
 
-                  method: "POST",
-                  url: app.urlApi+"reset-senha.php",
-                  data:{token:app.token,resetEmail:resetEmail}
-              
-              })
-              request.done(function (dados) {     
+                if(xhr.readyState == 4) {
 
-                  $("#btnViewResetarSenha").html("Resetar senha");       
+                    if(xhr.status == 200) {
 
-                  console.log("%c RETORNO DO RESET","background:#ff0000;color:#fff;");
-                  console.log(dados);
+                        console.log("OPERAÇÃO REALIZADA COM SUCESSO");
+                        console.log(JSON.parse(xhr.responseText));
 
-                  var dadosUsuario = JSON.stringify(dados);
-                  
-                  if(dados.sucesso=="200"){
-                     
-                     app.viewLogin();
-                     aviso("Deu certo! Senha resetada","Enviamos para o seu e-mails instruções sobre o reset de senha.");
-                     
-                  }else{
-                     
-                     aviso("Oops! E-mail não encontrado","Seu e-mail não foi localizado na plataforma. Verique as informações inseridas e tente novamente.");
-                  
-                  }
-                  
-              });
-              request.fail(function (dados) {
+                        var dados = JSON.parse(xhr.responseText);
 
-                   $("#btnViewResetarSenha").html("Resetar senha");  
-                     
-                   console.log("API NÃO DISPONÍVEL (ResetDeSenha)");
-                   console.log(dados);
-                   aviso("Oops! Algo deu errado","Nossos servidores estão passando por dificuldades técnicas, tente novamente em alguns minutos");
+                        if(dados.sucesso==403){
 
-              });
-              // FINAL CHAMADA AJAX
-              */
+                            document.getElementById('msgErroLoginSenha').click();
 
-              app.viewLogin();
-              aviso("Deu certo! Senha resetada","Enviamos para o seu e-mails instruções sobre o reset de senha.");
-                     
+                        }else{
+                            
+                            document.getElementById('msgSucessoReset').click();
+                        }
+                        
+                    }else{
+                    
+                        console.log("SEM SUCESSO procResetSenha()");
+                        console.log(JSON.parse(xhr.responseText));
+
+                        document.getElementById('msgErroLoginSenha').click();
+
+                    }
+
+                }
+            }; // FINAL AJAX VANILLA
+
+            /* EXECUTA */
+            xhr.send(params);
+
+    }
+
+
+
+    getContatos(){
+
+        console.log("INICIANDO FUNÇÃO PARA CARREGAR OS CONTATOS DO USÁRIO");
+
+        var idUsuario = localStorage.getItem("idUsuario");
+
+                // CONFIGURAÇÕES AJAX VANILLA
+                let xhr = new XMLHttpRequest();
+                        
+                xhr.open('POST', app.urlApi+'pefisa/meus-numeros/',true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+                var params = "token="+app.token+
+                            "&id_usuario="+idUsuario;
+                
+                // INICIO AJAX VANILLA
+                xhr.onreadystatechange = () => {
+
+                if(xhr.readyState == 4) {
+
+                    if(xhr.status == 200) {
+
+                        console.log("OPERAÇÃO REALIZADA COM SUCESSO");
+                        console.log(JSON.parse(xhr.responseText));
+
+                        var contatos = JSON.parse(xhr.responseText);
+
+                        // FEED DE PESQUISA
+                        jQuery("#listaContatosPesquisa").html(`
+
+                               ${contatos.dados.map((n) => {
+
+                                    return `
+                                    
+                                        <a href="" onclick="app.enviarCobranca('${n.nome}','${n.numero}','${n.id}')" class="d-flex mb-3" data-filter-item data-filter-name="todos ${n.nome}" style="padding-top:26px">
+                            
+                                            <div class="resumo-letra-contato">
+                                                ${n.nome[0]}
+                                            </div>
+                                            <div>
+                                                <h5 class="font-16 font-600">${n.nome}</h5>
+                                                <p class="line-height-s mt-1 opacity-70">${n.numero}</p>
+                                            </div>
+                                            <div class="align-self-center ps-3">
+                                                <i class="fa fa-angle-right opacity-20"></i>
+                                            </div>
+                                        </a>
+                                    
+                                    `;
+
+                               }).join('')}
+                        
+                        `);
+
+                        // LISTAGEM GERAL
+                        jQuery("#listaContatosListagem").html(`
+
+                               ${contatos.dados.map((n) => {
+
+                                    $(".carregando-contatos").hide();
+                                    $(".carregando-contatos-vazio").hide();
+
+                                    return `
+                                    
+                                        <a href="" onclick="app.enviarCobranca('${n.nome}','${n.numero}','${n.id}')" class="d-flex mb-3">
+                                            <div>
+                                                <div class="resumo-letra-contato">
+                                                    ${n.nome[0]}
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h5 class="font-16 font-600">${n.nome}</h5>
+                                                <p class="line-height-s mt-1 opacity-70">${n.numero}</p>
+                                            </div>
+                                            <div class="align-self-center ps-3">
+                                                <i class="fa fa-angle-right opacity-20"></i>
+                                            </div>
+                                        </a>
+                                    
+                                    `;
+
+                               }).join('')}
+                        
+                        `);
+
+                        if(contatos.dados.length==0){
+
+                            $(".carregando-contatos").hide();
+                            $(".carregando-contatos-vazio").show();
+                        }
+
+                        
+                    }else{
+                    
+                        console.log("SEM SUCESSO getContatos()");
+                        console.log(JSON.parse(xhr.responseText));
+
+                        document.getElementById('erroGeral').click();
+
+                    }
+
+                }
+            }; // FINAL AJAX VANILLA
+
+            /* EXECUTA */
+            xhr.send(params);
+
+
+
+    }
+
+    enviarCobrancaPix(form){
+
+                var dadosForm = $(form).serialize();
+
+                // CONFIGURAÇÕES AJAX VANILLA
+                let xhr = new XMLHttpRequest();
+                
+                xhr.open('POST', app.urlApi+'enviarmsg',true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+                var params = "token="+app.token+
+                            "&"+dadosForm;
+                
+                // INICIO AJAX VANILLA
+                xhr.onreadystatechange = () => {
+
+                if(xhr.readyState == 4) {
+
+                    if(xhr.status == 200) {
+
+                        console.log("OPERAÇÃO REALIZADA COM SUCESSO");
+                        console.log(JSON.parse(xhr.responseText));
+
+                        document.getElementById('sucessoEnvioMsg').click();                      
+                        
+                    }else{
+                    
+                        console.log("SEM SUCESSO enviarCobrancaPix()");
+                        console.log(JSON.parse(xhr.responseText));
+
+                        document.getElementById('msgErroLoginSenha').click();
+
+                    }
+
+                }
+            }; // FINAL AJAX VANILLA
+
+            /* EXECUTA */
+            xhr.send(params);
+
+
+    }
+
+    addContato(form){
+
+                var dadosForm = $(form).serialize();
+                var idUsuario = localStorage.getItem("idUsuario");
+
+                // CONFIGURAÇÕES AJAX VANILLA
+                let xhr = new XMLHttpRequest();
+                
+                xhr.open('POST', app.urlApi+'pefisa/add-numero/',true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+                var params = "token="+app.token+
+                            "&id_usuario="+idUsuario+"&"+dadosForm;
+                
+                // INICIO AJAX VANILLA
+                xhr.onreadystatechange = () => {
+
+                if(xhr.readyState == 4) {
+
+                    if(xhr.status == 200) {
+
+                        console.log("OPERAÇÃO REALIZADA COM SUCESSO, RETORNO DOS DADOS DO CONTATO ADICIONADO");
+                        console.log(JSON.parse(xhr.responseText));
+
+                        var dados = JSON.parse(xhr.responseText);
+
+                        // SALVAR DADOS NA SESSÃO
+                        localStorage.setItem("nomeCobranca",dados.dados[0].nome);
+                        localStorage.setItem("numeroCobranca",dados.dados[0].numero);
+                        localStorage.setItem("idContato",dados.dados[0].id);
+
+                        document.getElementById('sucessoEnvioMsg').click();                      
+                        
+                    }else{
+                    
+                        console.log("SEM SUCESSO addContato()");
+                        console.log(JSON.parse(xhr.responseText));
+
+                        document.getElementById('msgErroLoginSenha').click();
+
+                    }
+
+                }
+            }; // FINAL AJAX VANILLA
+
+            /* EXECUTA */
+            xhr.send(params);
+
+    }
+
+    getMeuPix(){
+
+        var idUsuario    = localStorage.getItem("idUsuario");
+        var dadosUsuario = JSON.parse(localStorage.getItem("dadosUsuario"));
+
+        var chave_pix     = dadosUsuario.chave_pix;
+        var chave_pix_info = dadosUsuario.info_chave_pix;
+
+        $("#chave_pix").val(chave_pix);
+        $("#info_chave_pix").val(chave_pix_info);
+
+    }
+
+    getMeusDados(){
+
+        var idUsuario    = localStorage.getItem("idUsuario");
+        var dadosUsuario = JSON.parse(localStorage.getItem("dadosUsuario"));
+
+        var nome     = dadosUsuario.nome;
+        var email    = dadosUsuario.email;
+        var celular  = dadosUsuario.celular;
+        var senha    = dadosUsuario.senha;
+
+        $("#nome").val(nome);
+        $("#celular").val(celular);
+        $("#form1a").val(email);
+        $("#form1ab").val(senha);
+
+    }
+
+    salvarPix(form){
+
+                var dadosForm = $(form).serialize();
+                var idUsuario = localStorage.getItem("idUsuario");
+
+                var dadosUsuario = JSON.parse(localStorage.getItem("dadosUsuario"));
+
+                var chave_pix      = $("#chave_pix").val();
+                var chave_pix_info = $("#info_chave_pix").val();
+
+                dadosUsuario.chave_pix      = chave_pix;
+                dadosUsuario.info_chave_pix = chave_pix_info;
+
+                // ATUALIZAR AS INFORMAÇÕES DO USUÁRIO NA MEMORIA
+                localStorage.setItem("dadosUsuario",JSON.stringify(dadosUsuario));
+
+                // CONFIGURAÇÕES AJAX VANILLA
+                let xhr = new XMLHttpRequest();
+                
+                xhr.open('POST', app.urlApi+'pefisa/salvar-pix/',true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+                var params = "token="+app.token+
+                            "&id_usuario="+idUsuario+"&"+dadosForm;
+                
+                // INICIO AJAX VANILLA
+                xhr.onreadystatechange = () => {
+
+                if(xhr.readyState == 4) {
+
+                    if(xhr.status == 200) {
+
+                        console.log("OPERAÇÃO REALIZADA COM SUCESSO");
+                        console.log(JSON.parse(xhr.responseText));
+
+                        document.getElementById('sucessoEnvioMsg').click();                      
+                        
+                    }else{
+                    
+                        console.log("SEM SUCESSO salvarPix()");
+                        console.log(JSON.parse(xhr.responseText));
+
+                        document.getElementById('msgErroLoginSenha').click();
+
+                    }
+
+                }
+            }; // FINAL AJAX VANILLA
+
+            /* EXECUTA */
+            xhr.send(params);
+
+    }
+
+    salvarMeusDados(form){
+
+                var dadosForm = $(form).serialize();
+                var idUsuario = localStorage.getItem("idUsuario");
+
+                // CONFIGURAÇÕES AJAX VANILLA
+                let xhr = new XMLHttpRequest();
+                
+                xhr.open('POST', app.urlApi+'pefisa/editar-meus-dados/',true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+                var params = "token="+app.token+
+                            "&id_usuario="+idUsuario+"&"+dadosForm;
+                
+                // INICIO AJAX VANILLA
+                xhr.onreadystatechange = () => {
+
+                if(xhr.readyState == 4) {
+
+                    if(xhr.status == 200) {
+
+                        console.log("OPERAÇÃO REALIZADA COM SUCESSO");
+                        console.log(JSON.parse(xhr.responseText));
+
+                        var dados = JSON.parse(xhr.responseText);
+
+                        // SALVAR DADOS NA SESSÃO
+                        localStorage.setItem("dadosUsuario",JSON.stringify(dados.dados[0]));
+
+                        document.getElementById('sucessoEnvioMsg').click();                      
+                        
+                    }else{
+                    
+                        console.log("SEM SUCESSO salvarMeusDados()");
+                        console.log(JSON.parse(xhr.responseText));
+
+                        document.getElementById('msgErroLoginSenha').click();
+
+                    }
+
+                }
+            }; // FINAL AJAX VANILLA
+
+            /* EXECUTA */
+            xhr.send(params);
+
+    }
+
+    removerContato(idContato){
+
+                // CONFIGURAÇÕES AJAX VANILLA
+                let xhr = new XMLHttpRequest();
+                
+                xhr.open('POST', app.urlApi+'pefisa/remover-numero/',true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+                var params = "token="+app.token+
+                            "&id_numero="+idContato;
+                
+                // INICIO AJAX VANILLA
+                xhr.onreadystatechange = () => {
+
+                if(xhr.readyState == 4) {
+
+                    if(xhr.status == 200) {
+
+                        console.log("OPERAÇÃO REALIZADA COM SUCESSO");
+                        console.log(JSON.parse(xhr.responseText));
+
+                        location.href="dashboard.html";                     
+                        
+                    }else{
+                    
+                        console.log("SEM SUCESSO removerContato()");
+                        console.log(JSON.parse(xhr.responseText));
+
+                        document.getElementById('msgErroLoginSenha').click();
+
+                    }
+
+                }
+            }; // FINAL AJAX VANILLA
+
+            /* EXECUTA */
+            xhr.send(params);
 
     }
 

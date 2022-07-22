@@ -1,7 +1,7 @@
 var pscLat = 0;
 var pscLon = 0;
 
-var app = new App(1, "PET DARLING", 
+var app = new App(1, "PEFISA", 
 					 "1.0.0", 
 					 "HIBRIDO",
 					 "HOMOLOGACAO",
@@ -13,7 +13,6 @@ var app = new App(1, "PET DARLING",
 
 // INICIALIZAR O APP
 //app.initApp();
-
 
 
 /**
