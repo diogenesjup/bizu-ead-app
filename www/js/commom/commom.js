@@ -8,7 +8,7 @@ function openEsqueciSenha(){
 // ABRIR URL DE CADASTRO
 function openCriarConta(){
 
-    cordova.InAppBrowser.open(app.urlDom+"minha-conta/autenticacao/", '_blank', 'location=yes,hidden=no,hardwareback=no');
+    cordova.InAppBrowser.open(app.urlDom+"minha-conta/autenticacao/?cadastro-app=sim", '_blank', 'location=yes,hidden=no,hardwareback=no');
 
 }
 
