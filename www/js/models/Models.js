@@ -18,7 +18,7 @@ class Models{
             // CONFIGURAÇÕES AJAX VANILLA
             let xhr = new XMLHttpRequest();
             
-            xhr.open('POST', app.urlApi+'auth/login/',true);
+            xhr.open('POST', app.urlApi+'wp-json/bizuapi/v2/custom-auth/',true);
             xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
             var params = "token="+app.token+
@@ -31,21 +31,22 @@ class Models{
 
                 if(xhr.status == 200) {
 
-                    console.log("OPERAÇÃO REALIZADA COM SUCESSO");
+                    console.log("OPERAÇÃO REALIZADA COM SUCESSO, RETORNO DOS DADOS");
                     console.log(JSON.parse(xhr.responseText));
 
                     var dados = JSON.parse(xhr.responseText);
 
-                    if(dados.sucesso==403){
+                    if(dados.match==false){
 
                         document.getElementById('msgErroLoginSenha').click();
 
                     }else{
                         
                         // LOGIN OK
-                        app.login(dados.dados[0].id,dados.dados[0].email,dados.dados[0]);
+                        app.login(dados.dados.the_user_id,dados.dados.login,dados.dados);
 
                     }
+                    
                     
                 }else{
                 

@@ -21,9 +21,9 @@ class App {
         }
         if(ambiente=="PRODUCAO"){
 
-            this.urlDom = "";
-            this.urlApi = "";
-            this.urlCdn = "";
+            this.urlDom = "https://bizu.com.br/plataforma/";
+            this.urlApi = "https://bizu.com.br/plataforma/";
+            this.urlCdn = "https://bizu.com.br/plataforma/";
 
         }
 

@@ -1,3 +1,18 @@
+// ABRIR URL DE ESQUECI SENHA
+function openEsqueciSenha(){
+
+    cordova.InAppBrowser.open(app.urlDom+"minha-conta/autenticacao/?reset-app=sim", '_blank', 'location=yes,hidden=no,hardwareback=no');
+
+}
+
+// ABRIR URL DE CADASTRO
+function openCriarConta(){
+
+    cordova.InAppBrowser.open(app.urlDom+"minha-conta/autenticacao/", '_blank', 'location=yes,hidden=no,hardwareback=no');
+
+}
+
+
 function enviarCobrancaPix(form){
 
     // SERIALIZAR O FORMULARIO PARA ENVIAR PARA O SERVIDOR

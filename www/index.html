@@ -56,14 +56,14 @@ ysyss
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
-<title>Pefisa</title>
+<title>BIZU</title>
 <link rel="stylesheet" type="text/css" href="styles/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="styles/style.css">
 <link rel="stylesheet" type="text/css" href="css/diogenes.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="fonts/css/fontawesome-all.min.css">
 
-<meta name="theme-color" content="#023f88">
+<meta name="theme-color" content="#000">
 <!--<link rel="apple-touch-icon" sizes="180x180" href="app/icons/icon-192x192.png">-->
 </head>
 
@@ -77,7 +77,7 @@ ysyss
     <div class="page-content header-clear-medium">
 
         <div class="brand-logo">
-            <img src="images/logo-pefisa.png" alt="Pefisa">
+            <img src="assets/images/logo-medio.png" alt="Bizu">
         </div>
 
         <div class="card card-style">
@@ -113,12 +113,24 @@ ysyss
 
                 <div class="row pt-3 mb-3">
                     <div class="col-6 text-start">
-                        <a href="esqueci-minha-senha.html" class="color-highlight">Esqueceu sua senha?</a>
+                        <a href="javascript:void(0)" onclick="openEsqueciSenha()" class="color-highlight">Esqueceu sua senha?</a>
                     </div>
                     <div class="col-6 text-end">
-                        <a href="cadastro.html" class="color-highlight">Criar uma conta</a>
+                        <a href="javascript:void(0)" onclick="openCriarConta()" class="color-highlight">Criar uma conta</a>
                     </div>
                 </div>
+                <!-- 
+
+                    URL EXTERNA
+                    cordova.InAppBrowser.open("https://play.google.com/store/apps/details?id=com.mangu.beautyConnect&hl=pt_BR&gl=US", '_system', 'location=yes,hidden=no,hardwareback=no');
+
+                    URL INTERNA
+                    cordova.InAppBrowser.open(localStorage.getItem("siteCompany"), '_blank', 'location=yes,hidden=no,hardwareback=no');
+
+
+
+
+                -->
 
                 <a href="#" id="msgErroLoginSenha" data-menu="msgErroLoginSenhaMD"></a>
                 <a href="#" id="msgErroAjax" data-menu="msgErroAjaxMD"></a>

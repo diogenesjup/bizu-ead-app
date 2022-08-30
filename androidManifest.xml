@@ -2,7 +2,7 @@
     <?xml version="1.0" encoding="utf-8"?>
     
     <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:windowSoftInputMode="adjustPan"
-                package="com.diogenesjunior.pefisa" android:versionName="1.1" android:versionCode="1.1" android:hardwareAccelerated="true">         
+                package="com.diogenesjunior.bizu" android:versionName="1.1" android:versionCode="1.1" android:hardwareAccelerated="true">         
             <supports-screens
                     android:largeScreens="false"
                     android:normalScreens="true"
@@ -22,7 +22,7 @@
             <application android:icon="@drawable/icon" android:label="@string/app_name"
                     android:hardwareAccelerated="true"
                     android:debuggable="true">
-                    <activity android:name="Pefisa Pix" android:label="@string/app_name"
+                    <activity android:name="Bizu EAD" android:label="@string/app_name"
                                     android:theme="@android:style/Theme.Black.NoTitleBar"
                                     android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale">
                             <intent-filter>

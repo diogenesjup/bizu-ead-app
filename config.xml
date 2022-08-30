@@ -3,15 +3,15 @@
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
-        id        = "com.diogenesjunior.pefisa"
+        id        = "com.diogenesjunior.bizu"
         version   = "1.0.0">
 
         <!-- LEMBRAR DE MUDAR O APP ID ANTES DE SUBIR O APP NAS LOJAS -->
 
-    <name>Pefisa Pix</name>
+    <name>Bizu EAD</name>
 
     <description>
-        Aplicativo para gerar cobranças PIX Pefisa
+        Aplicativo para os alunos da plataforma Bizu
     </description>
 
     <author href="https://www.diogenesjunior.com.br/" email="contato@diogenesjunior.com.br">
@@ -39,7 +39,7 @@
     <preference name="disable-cursor"             value="false" />          <!-- blackberry: prevents a mouse-icon/cursor from being displayed on the app -->
     <preference name="android-installLocation"    value="auto" />           <!-- android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. -->
     <!-- STATUS BAR TRANSPARENTE -->
-    <preference name="StatusBarBackgroundColor" value="#023f88" />
+    <preference name="StatusBarBackgroundColor" value="#000" />
     
     <preference name="SplashScreenDelay" value="1" />  
     <preference name="AutoHideSplashScreen" value="true" />  

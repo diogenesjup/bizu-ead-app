@@ -1,22 +1,22 @@
 {
-  "name": "com.diogenesjunior.pefisa",
+  "name": "com.diogenesjunior.bizu",
   "version": "1.0.0",
-  "description": "Aplicativo para gerar cobranças PIX Pefisa",
+  "description": "Aplicativo para os alunos da plataforma Bizu",
   "main": "index.html",
   "scripts": {
     "test": "test"
   },
   "repository": {
     "type": "git",
-    "url": "git+ https://github.com/diogenesjup/pefisa-app-pix.git"
+    "url": "git+ https://github.com/diogenesjup/bizu-ead-app.git"
   },
   "keywords": [
-    "pefisa pix"
+    "Bizu, EAD, Cursos Online"
   ],
   "author": "Diogenes Junior",
   "license": "ISC",
   "bugs": {
-    "url": " https://github.com/diogenesjup/pefisa-app-pix/issues"
+    "url": " https://github.com/diogenesjup/bizu-ead-app/issues"
   },
-  "homepage": " https://github.com/diogenesjup/pefisa-app-pix#readme"
+  "homepage": " https://github.com/diogenesjup/bizu-ead-app#readme"
 }
