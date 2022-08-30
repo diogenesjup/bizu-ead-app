@@ -15,6 +15,12 @@ class Models{
 
             var dadosForm = $(form).serialize();
 
+            var login = document.getElementById("form1a").value;
+            var senha = document.getElementById("form1ab").value;
+
+            localStorage.setItem("loginDB",login);
+            localStorage.setItem("senhaDB",senha);
+
             // CONFIGURAÇÕES AJAX VANILLA
             let xhr = new XMLHttpRequest();
             
@@ -43,7 +49,7 @@ class Models{
                     }else{
                         
                         // LOGIN OK
-                        app.login(dados.dados.the_user_id,dados.dados.login,dados.dados);
+                        app.login(dados.the_user_id,dados.login,dados);
 
                     }
                     
@@ -185,21 +191,19 @@ class Models{
     }
 
 
+    // RECUPERAR AS INFOS DO USUARIO
+    getInfos(){
 
-    getContatos(){
+                console.log("INICIANDO FUNÇÃO PARA CARREGAR O CONTEUDO");
 
-        console.log("INICIANDO FUNÇÃO PARA CARREGAR OS CONTATOS DO USÁRIO");
-
-        var idUsuario = localStorage.getItem("idUsuario");
+                var idUsuario = localStorage.getItem("idUsuario");
+                var dadosUsuario = JSON.parse(localStorage.getItem("dadosUsuario"));
 
                 // CONFIGURAÇÕES AJAX VANILLA
                 let xhr = new XMLHttpRequest();
                         
-                xhr.open('POST', app.urlApi+'pefisa/meus-numeros/',true);
+                xhr.open('GET', app.urlApi+`wp-json/bizuapi/v2/infos/?id_usuario=${idUsuario}&email_usuario=${dadosUsuario.login}`,true);
                 xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-                var params = "token="+app.token+
-                            "&id_usuario="+idUsuario;
                 
                 // INICIO AJAX VANILLA
                 xhr.onreadystatechange = () => {
@@ -208,82 +212,92 @@ class Models{
 
                     if(xhr.status == 200) {
 
-                        console.log("OPERAÇÃO REALIZADA COM SUCESSO");
+                        console.log("OPERAÇÃO REALIZADA COM SUCESSO, RETORNO DOS DADOS:");
+
                         console.log(JSON.parse(xhr.responseText));
 
-                        var contatos = JSON.parse(xhr.responseText);
+                        var dados = JSON.parse(xhr.responseText);
 
-                        // FEED DE PESQUISA
-                        jQuery("#listaContatosPesquisa").html(`
 
-                               ${contatos.dados.map((n) => {
+                        // ALIMENTAR MEUS CURSOS
+                        var meusCursos = Object.entries(dados.cursos_usuario);
 
-                                    return `
-                                    
-                                        <a href="" onclick="app.enviarCobranca('${n.nome}','${n.numero}','${n.id}')" class="d-flex mb-3" data-filter-item data-filter-name="todos ${n.nome}" style="padding-top:26px">
-                            
-                                            <div class="resumo-letra-contato">
-                                                ${n.nome[0]}
-                                            </div>
-                                            <div>
-                                                <h5 class="font-16 font-600">${n.nome}</h5>
-                                                <p class="line-height-s mt-1 opacity-70">${n.numero}</p>
-                                            </div>
-                                            <div class="align-self-center ps-3">
-                                                <i class="fa fa-angle-right opacity-20"></i>
-                                            </div>
-                                        </a>
-                                    
-                                    `;
+                        if(meusCursos.length>0){
 
-                               }).join('')}
-                        
-                        `);
+                            console.log("TOTAL DE CURSOS CONTRATADOS: ");
+                            console.log(meusCursos.length);
 
-                        // LISTAGEM GERAL
-                        jQuery("#listaContatosListagem").html(`
+                            $(".carregando-cursos").hide();
 
-                               ${contatos.dados.map((n) => {
+                            // ALIMENTAR AS CATEGORIAS DE OUTROS CURSOS
+                            jQuery("#listaCursosListagem").html(`
+                                        ${meusCursos.map((n) => {
 
-                                    $(".carregando-contatos").hide();
-                                    $(".carregando-contatos-vazio").hide();
-
-                                    return `
-                                    
-                                        <a href="" onclick="app.enviarCobranca('${n.nome}','${n.numero}','${n.id}')" class="d-flex mb-3">
-                                            <div>
-                                                <div class="resumo-letra-contato">
-                                                    ${n.nome[0]}
+                                            return `
+                                                
+                                                <div class="curso-comprado" onclick="openCategoria('${n[1].url_em_curso}')">
+                                                    <div class="curso-comprado-capa" style="background:url('${n[1].imagem}') #f2f2f2 no-repeat;background-size:cover;background-position:center center;">
+                                                        &nbsp;
+                                                    </div>
+                                                    <h3>${n[1].titulo}</h3>
+                                                    <p>${n[1].resumo}</p>
                                                 </div>
-                                            </div>
-                                            <div>
-                                                <h5 class="font-16 font-600">${n.nome}</h5>
-                                                <p class="line-height-s mt-1 opacity-70">${n.numero}</p>
-                                            </div>
-                                            <div class="align-self-center ps-3">
-                                                <i class="fa fa-angle-right opacity-20"></i>
-                                            </div>
-                                        </a>
-                                    
-                                    `;
 
-                               }).join('')}
-                        
-                        `);
+                                            `;
 
-                        if(contatos.dados.length==0){
+                                        }).join('')}
+                            `);
 
-                            $(".carregando-contatos").hide();
-                            $(".carregando-contatos-vazio").show();
+                            
+
+                        }else{
+
+                            $(".carregando-cursos").hide();
+                            $(".carregando-contatos-vazio").fadeIn(500);
+
                         }
 
+
+                        // CONVERTER O OBJETO EM ARRAY,
+                        // EM TEORIA ISSO NÃO SERIA NECESSÁRIO, MAS O WORDPRESS ESTÁ RETORNANDO EM UM FORMADO INCOMUM
+                        var categorias = Object.entries(dados.categorias_cursos);
+                        //var categorias = Object.keys(dados.categorias_cursos).map((key) => [Number(key), dados.categorias_cursos[key]]);
+
+                        console.log("CATEGORIAS");
+                        console.log(categorias);
+
+                        console.log("TOTAL DE CATEGORIAS: ");
+                        console.log(categorias.length);
+
                         
+                        // ALIMENTAR AS CATEGORIAS DE OUTROS CURSOS
+                        jQuery("#listaCategoriasListagem").html(`
+                                ${categorias.map((n) => {
+
+                                    $(".carregando-cursos-outros").hide();
+
+                                    return `
+                                          <div class="categoria-cursos">
+                                             <a href="#" onclick="openCategoria('${n[1].url}')" title="${n[1].nome}">
+                                                 <h2>${n[1].nome}</h2>
+                                             </a>
+                                          </div>
+                                    `;
+                                }).join('')}
+                       `);
+                       
+
+
+
+
+
+
                     }else{
                     
-                        console.log("SEM SUCESSO getContatos()");
-                        console.log(JSON.parse(xhr.responseText));
-
+                        console.log("SEM SUCESSO getInfos()");
                         document.getElementById('erroGeral').click();
+
+                        console.log(JSON.parse(xhr.responseText));
 
                     }
 
@@ -291,11 +305,12 @@ class Models{
             }; // FINAL AJAX VANILLA
 
             /* EXECUTA */
-            xhr.send(params);
-
-
+            xhr.send();
 
     }
+
+
+
 
     enviarCobrancaPix(form){
 

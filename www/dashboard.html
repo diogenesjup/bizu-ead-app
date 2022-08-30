@@ -56,7 +56,7 @@ ysyss
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
-<title>Pefisa</title>
+<title>BIZU</title>
 <link rel="stylesheet" type="text/css" href="styles/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="styles/style.css">
 <link rel="stylesheet" type="text/css" href="css/diogenes.css">
@@ -66,7 +66,7 @@ ysyss
 <link rel='stylesheet' type="text/css" href="css/dzstooltip.css"/>
 <link rel='stylesheet' type="text/css" href="css/dzscalendar.css"/>
 
-<meta name="theme-color" content="#023f88">
+<meta name="theme-color" content="#0299ff">
 <!--<link rel="apple-touch-icon" sizes="180x180" href="app/icons/icon-192x192.png">-->
 </head>
 
@@ -78,7 +78,7 @@ ysyss
 
     <div class="header header-auto-show header-fixed header-logo-center">
         <a href="dashboard.html" class="header-title">
-            <img src="images/logo-pefisa.png" alt="Pefisa">
+            <img src="assets/images/logo-medio.png" alt="Bizu">
         </a>
         <a href="#" data-menu="menu-main" class="header-icon header-icon-1"><i class="fas fa-bars"></i></a>
         <a href="#" data-toggle-theme class="header-icon header-icon-4 show-on-theme-dark"><i class="fas fa-sun"></i></a>
@@ -87,15 +87,15 @@ ysyss
 
     <div id="footer-bar" class="footer-bar-6">
        
-        <a href="" onclick="location.href='dashboard.html'"><i class="fa fa-search"></i><span>Pesquisar</span></a>
-        <a href="" onclick="location.href='novo-contato.html'" class="circle-nav active-nav"><i class="fa fa-plus"></i><span>Novo</span></a>
-      
+        <a href="" onclick="location.href='banco-de-questoes.html'"><i class="fa fa-database"></i><span>Questões</span></a>
+        <a href="" onclick="location.href='dashboard.html'" class="circle-nav active-nav"><i class="fa fa-home"></i><span>Início</span></a>
         <a href="#" data-menu="menu-main"><i class="fa fa-bars"></i><span>Mais</span></a>
+
     </div>
     
 
     <div class="page-title page-title-fixed">
-        <h1><img src="images/logo-pefisa.png" alt="Pefisa"></h1>
+        <h1><img src="assets/images/logo-medio.png" alt="Bizu"></h1>
        
         <a href="#" class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-light" data-toggle-theme><i class="fa fa-moon"></i></a>
         <a href="#" class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-dark" data-toggle-theme><i class="fa fa-lightbulb color-yellow-dark"></i></a>
@@ -110,68 +110,52 @@ ysyss
 
     <div class="page-content">
 
-        <!-- PESQUISA -->
-        <div class="content mt-0 mb-0" style="margin-top: 12px !important;margin-bottom: 24px !important;">
-            <div class="search-box search-dark shadow-xl border-0 bg-theme rounded-sm bottom-0">
-                <i class="fa fa-search"></i>
-                <input type="text" class="border-0" placeholder="Faça uma pesquisa" data-search>
-            </div>   
-            <div class="search-results disabled-search-list">
-                <div class="list-group list-custom-large mb-0" id="listaContatosPesquisa">
-                   
-                    <!--
-                    <a href="enviar.html" class="d-flex mb-3" data-filter-item data-filter-name="todos André andre an" style="padding-top:26px">
-                        
-                        <div>
-                            <img src="images/pictures/6s.jpg" width="60" class="rounded-xl me-3" style="width: 60px;height: 60px;margin-right: 10px;margin-top: -17px;">
-                        </div>
-                        <div>
-                            <h5 class="font-16 font-600">André Garrido</h5>
-                            <p class="line-height-s mt-1 opacity-70">(11) 9 8713-3509</p>
-                        </div>
-                        <div class="align-self-center ps-3">
-                            <i class="fa fa-angle-right opacity-20"></i>
-                        </div>
-                    </a>
-                    -->
-                    
-
-                </div>
-            </div>
-            <div class="search-no-results disabled mt-4">
-                <div class="card card-style mx-0">
-                    <div class="content">
-                        <p class="mb-n1 font-600 color-highlight">Desculpe, nada encontrado.</p>
-                        <h1>Sem resultados</h1>
-                        <p>
-                            Sua pesquisa não retornou resultados, tente novamente com outro critério de pesquisa.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- PESQUISA -->
-        
+       
         
 
         <!-- HISTORIES-->
         <div class="content mt-0 mb-0">
-        
+            
+            <!-- MEUS CURSOS -->
             <div class=" mx-0">
                 <div class="content">
-                    <h1>Contatos</h1>
-                    <p>&nbsp;</p>
+                    <h1>Seus Cursos</h1>
                 </div>
             </div>
 
-            <div class="carregando-contatos text-center">
-                <i class="fa fa-sync fa-spin me-3"></i> carregando seus contatos
+            <div class="carregando-cursos text-center">
+                <i class="fa fa-sync fa-spin me-3"></i> carregando seus cursos
             </div>
             <div class="carregando-contatos-vazio text-center" style="display: none;">
-                Você ainda não tem nenhum contato cadastrado.
+                Você ainda não tem nenhum curso comprado.
             </div>
 
-            <div id="listaContatosListagem"></div>
+            <div id="listaCursosListagem"></div>
+            <!-- MEUS CURSOS -->
+
+
+
+            <p>&nbsp;</p>
+           
+
+
+
+            <!-- OUTROS CURSOS (CATEGORIAS)-->
+            <div class=" mx-0">
+                <div class="content">
+                    <h1>Outros Cursos</h1>
+                </div>
+            </div>
+
+            <div class="carregando-cursos-outros text-center">
+                <i class="fa fa-sync fa-spin me-3"></i> carregando conteúdo
+            </div>
+            
+            <div id="listaCategoriasListagem"></div>
+            <!-- OUTROS CURSOS (CATEGORIAS)-->
+
+
+
 
             <!--
             <a href="enviar.html" class="d-flex mb-3">
@@ -281,7 +265,7 @@ ysyss
 // CARREGAR CONTATOS
 setTimeout(function(){
 
-    app.models.getContatos();
+    app.models.getInfos();
 
 }, 2000);
 

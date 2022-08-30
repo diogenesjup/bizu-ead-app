@@ -115,3 +115,56 @@ body.auth{
     margin-right: 13px;
     line-height: 24px;
   }
+
+
+  .categoria-cursos{
+    position: relative;
+    display: block;
+    width: 100%;
+    background: #000000;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    height: 100px;
+  }
+
+  .categoria-cursos a,
+  .categoria-cursos a:hover{
+    color: #fff !important;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+  }
+
+  .categoria-cursos h2{
+    color: #fff;
+    font-size: 17px;
+  }
+
+  .curso-comprado{
+    position: relative;
+    display: block;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 11px;
+    padding: 24px;
+    margin-bottom: 14px;
+  }
+
+  .curso-comprado .curso-comprado-capa{
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 324px;
+  }
+
+  .curso-comprado h3{
+    margin-bottom: -24px;
+   }
+
+  .curso-comprado p{
+    font-size: 12px;
+    line-height: 19px;
+    margin-top: -19px;
+  }

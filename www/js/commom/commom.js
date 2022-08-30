@@ -12,6 +12,22 @@ function openCriarConta(){
 
 }
 
+// ABRIR SITE BIZU
+function openSiteBizu(){
+  
+   cordova.InAppBrowser.open(app.urlDom+"?ref=app", '_system', 'location=yes,hidden=no,hardwareback=no');
+  
+}
+
+// ABRIR CATEGORIA OU CURSO COMPRADO
+function openCategoria(url){
+
+  cordova.InAppBrowser.open(url, '_blank', 'location=yes,hidden=no,hardwareback=no');
+
+}
+
+
+
 
 function enviarCobrancaPix(form){
 
