@@ -168,3 +168,472 @@ body.auth{
     line-height: 19px;
     margin-top: -19px;
   }
+
+
+  #listaCategoriasListagem{
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+
+  .titulo-e-resumo-curso{
+
+  }
+
+  .titulo-e-resumo-curso h1{
+
+  }
+
+  .titulo-e-resumo-curso h1 a,
+  .titulo-e-resumo-curso h1 a:hover{
+    padding-right: 7px;
+  }
+
+  .titulo-e-resumo-curso h1 small{
+    display: block;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: normal;
+    color: #747474;
+    margin-top: 12px;
+    margin-bottom: 45px;
+  }
+
+  .titulo-e-resumo-curso p{
+    line-height: 19px;
+    margin-top: -19px;
+  }
+
+  .titulo-e-resumo-curso img{
+
+
+
+  }
+
+  .conteudo-curso-aula{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 11px;
+    margin-bottom: 16px;
+    cursor: pointer;
+  }
+
+  .conteudo-curso-aulas .row{
+    margin-bottom: 0;
+  }
+
+  .play-aula{
+
+  }
+
+  .play-aula a,
+  .play-aula a:hover{
+
+  }
+
+  .conteudo-curso-aulas .play-aula img{
+    opacity: 0.3;
+  }
+
+  .conteudo-aula{
+
+  }
+
+  .conteudo-aula h3{
+    font-size: 15px;
+    line-height: 19px;
+  }
+
+  .conteudo-aula p{
+    line-height: 18px;
+  }
+
+.conteudo-aula-single iframe{
+    width: 100%;
+}
+
+.arquivos-para-download{
+
+}
+
+.arquivos-para-download .arquivo-da-aula{
+    cursor: pointer;
+    position: relative;
+    display: block;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    padding: 20px;
+}
+
+.arquivos-para-download .arquivo-da-aula p{
+
+}
+
+.arquivos-para-download .arquivo-da-aula p i{
+
+}
+
+.btns-navegacao-aula a,
+.btns-navegacao-aula a:hover{
+    position: relative;
+    display: block;
+}
+
+.btns-teste a,
+.btns-teste a:hover{
+    position: relative;
+    display: block;
+    color: #666;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+    font-size: 15px;
+}
+
+
+
+
+
+
+
+
+/* PESQUISA */
+section.pesquisa{
+
+}
+
+section.pesquisa .pesquisa-header{
+    text-align: center;
+}
+
+section.pesquisa .pesquisa-header h1{
+    text-align: center;
+}
+
+section.pesquisa .pesquisa-header p{
+    text-align: center;
+}
+
+
+  
+section.pesquisa .survey {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  section.pesquisa  .survey__panel {
+    
+  }
+  
+  section.pesquisa .survey__panel--current {
+    display: block;
+  }
+  
+  section.pesquisa  .survey__panel__question {
+    
+    font-size: 1.35em;
+    line-height: 1.2;
+    text-align:left;
+  }
+  
+  section.pesquisa  .survey__panel strong {
+    --darkGrey: #4b4b4b;
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: normal;
+    font-size: 0.95rem;
+    color: var(--darkGrey);
+  }
+  
+  section.pesquisa  .error-message {
+    --errClr: #b80d57;
+    height: 14px;
+    margin-bottom: 0;
+    margin-top: 5px;
+    font-size: 0.85rem;
+    color: var(--errClr);
+  }
+  
+  section.pesquisa [role="alert"] {
+    display: block;
+  }
+  
+  section.pesquisa .survey__panel__period {
+    /*display: grid;
+    grid-gap: 13px;
+    grid-template-columns: repeat(2, 150px);*/
+  }
+  
+  section.pesquisa .survey__panel__period [type="radio"] {
+    opacity: 0;
+    display: block;
+    width: 150px;
+    height: 50px;
+    position: absolute;
+    z-index: 1;
+    cursor: pointer;
+  }
+  
+  section.pesquisa .survey__panel__period label {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding: 15px 30px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: left;
+    border-radius: 6px;
+    line-height: 16px;
+  }
+  
+  section.pesquisa .survey__panel__period label:hover,
+  section.pesquisa .survey__panel__period [type="radio"]:checked + label {
+    border-color: #797979;
+  }
+  
+  section.pesquisa .survey__panel__period [type="radio"]:checked + label {
+    border-color: #797979;
+    background: #797979 !important;
+    color: #fff !important;
+    font-weight: bold !important;
+  }
+  
+  section.pesquisa .radiobox,
+  section.pesquisa .radiobox:checked,
+  section.pesquisa .radiobox:not(:checked),
+  section.pesquisa .checkbox,
+  section.pesquisa .checkbox:not(:checked) {
+    opacity: 0;
+  }
+  
+  section.pesquisa .radiobox:checked + label,
+  section.pesquisa .radiobox:not(:checked) + label,
+  section.pesquisa .checkbox:checked + label,
+  section.pesquisa .checkbox:not(:checked) + label {
+    position: relative;
+    padding-left: 30px;
+  }
+  
+  section.pesquisa .radiobox:checked + label:before,
+  section.pesquisa .radiobox:not(:checked) + label:before,
+  section.pesquisa .checkbox:checked + label:before,
+  section.pesquisa .checkbox:not(:checked) + label:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #ddd;
+    border-radius: 100%;
+    background-color: var(--whiteClr);
+  }
+  
+  section.pesquisa .radiobox:checked + label:after,
+  section.pesquisa .radiobox:not(:checked) + label:after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background-color: var(--intenseBlue);
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    border-radius: 100%;
+    transition: transform 0.2s cubic-bezier(0.785, 0.135, 0.15, 0.86),
+      opacity 0.2s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  }
+  
+  section.pesquisa .radiobox:not(:checked) + label:after,
+  section.pesquisa .checkbox:not(:checked) + label:after {
+    opacity: 0;
+    transform: scale(0);
+  }
+  
+  section.pesquisa .radiobox:checked + label:after,
+  section.pesquisa .checkbox:checked + label:after {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  section.pesquisa .survey__panel__satisfaction label,
+  section.pesquisa .survey__panel__recommendation label,
+  section.pesquisa .survey__panel__personaldetails label,
+  section.pesquisa .survey__panel__hearabout label {
+    line-height: 2;
+  }
+  
+  section.pesquisa .form-group-textarea {
+    margin-top: 1rem;
+  }
+  
+  section.pesquisa .form-group-textarea label {
+    display: block;
+    font-size: 0.95rem;
+  }
+  
+  section.pesquisa .form-group-textarea textarea {
+    padding: 10px;
+    overflow: auto;
+    font-size: 0.9rem;
+    display: block;
+    border: 2px solid var(--lightBlue);
+    font-family: inherit;
+    width: 100%;
+    resize: vertical;
+    min-height: 100px;
+    max-width: 300px;
+    color: var(--darkBlue);
+    -webkit-appearance: none;
+  }
+  
+  section.pesquisa .survey__panel .radiobox {
+    margin-left: 10px;
+  }
+  
+  section.pesquisa .checkbox:checked + label:before,
+  section.pesquisa .checkbox:not(:checked) + label:before {
+    border-radius: 0;
+  }
+  
+  section.pesquisa .checkbox:checked + label:before {
+    background-color: var(--intenseBlue);
+  }
+  
+  section.pesquisa .checkbox:checked + label:after,
+  section.pesquisa .checkbox:not(:checked) + label:after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 7px;
+    width: 2px;
+    height: 2px;
+    background-color: var(--whiteClr);
+    box-shadow: 2px 0 0 var(--whiteClr), 4px 0 0 var(--whiteClr),
+      4px -2px 0 var(--whiteClr), 4px -4px 0 var(--whiteClr),
+      4px -6px 0 var(--whiteClr), 4px -8px 0 var(--whiteClr);
+    transform: rotate(45deg);
+    transition: transform 0.2s cubic-bezier(0.785, 0.135, 0.15, 0.86),
+      opacity 0.2s cubic-bezier(0.785, 0.135, 0.15, 0.86),
+      background-color 0.2s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  }
+  
+  section.pesquisa .survey__panel__personaldetails .form-group {
+    margin: 1rem 0;
+  }
+  
+  section.pesquisa .survey__panel__personaldetails .name,
+  section.pesquisa .survey__panel__personaldetails .email,
+  section.pesquisa .survey__panel__personaldetails .age {
+    display: block;
+    font-size: 0.95rem;
+  }
+  
+  section.pesquisa .survey__panel__personaldetails [name="name"],
+  section.pesquisa .survey__panel__personaldetails [name="email"],
+  section.pesquisa .survey__panel__personaldetails [name="country"] {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 2px solid var(--lightBlue);
+    max-width: 300px;
+    -webkit-appearance: none;
+  }
+  
+  section.pesquisa .survey__panel__personaldetails [name="age"] {
+    padding: 0.6rem 0.75rem;
+    border: 2px solid var(--lightBlue);
+    -webkit-appearance: none;
+  }
+  
+  section.pesquisa .form-buttons {
+    display: flex;
+    max-width: 400px;
+    margin-left: 10px;
+    margin-top: auto;
+  }
+  
+  section.pesquisa .button {
+    display: inline-block;
+    padding: 10px 25px;
+    background-color: #5f6caf;
+    color: #fff;
+    border: 2px solid #5f6caf;
+    border-radius: 5px;
+    font-size: 0.875rem;
+    font-family: inherit;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  section.pesquisa button[disabled] {
+    display: none;
+  }
+  
+  section.pesquisa .button {
+    margin: 0 0.5rem;
+  }
+  
+  section.pesquisa .button:hover {
+    --btnHoverClr: #444e83;
+    background-color: var(--btnHoverClr);
+    border-color: var(--btnHoverClr);
+  }
+  
+  section.pesquisa .visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+  
+/*
+  .tab-controls a.collapsed{
+    background-color: #5f6caf;
+    color: #fff;
+  }
+*/
+
+
+.survey__panel{
+  padding-top: 20px;
+  border-bottom: 1px solid #cccc;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.survey__panel h2{
+  font-size: 17px;
+    color: #212121;
+}
+
+.survey__panel__period .form-group{
+  display: block;
+    position: relative;
+    width: 100%;
+    margin-bottom: 14px;
+}
+
+
+.p-btn-reiniciar-teste button,
+.p-btn-proxima-aula button{
+  position: relative;
+  display: block;
+}
+
+
+.p-btn-reiniciar-teste button,
+.p-btn-reiniciar-teste button:hover{
+  border: 1px solid #ccc;
+  color: #747474;
+  font-size: 18px;
+}
+
+section.pesquisa img{
+  width: 100%;
+  height: auto;
+}

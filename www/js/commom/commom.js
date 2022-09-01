@@ -26,7 +26,12 @@ function openCategoria(url){
 
 }
 
+// ABRIR ARQUIVO ANEXADO A AULA
+function openArquivo(url){
 
+  cordova.InAppBrowser.open(url, '_system', 'location=yes,hidden=no,hardwareback=no');
+
+}
 
 
 function enviarCobrancaPix(form){
@@ -694,11 +699,11 @@ function compartilhar(){
 
                   // this is the complete list of currently supported params you can pass to the plugin (all optional)
                   var options = {
-                    message: 'Rede Social Agroh', // not supported on some apps (Facebook, Instagram)
-                    subject: 'A rede social do Agronegócio', // fi. for email
+                    message: 'Bizu EAD', // not supported on some apps (Facebook, Instagram)
+                    subject: 'Plataforma de ensino', // fi. for email
                     //files: ['', ''], // an array of filenames either locally or remotely
-                    url: 'https://www.agroh.com.br',
-                    chooserTitle: 'Agroh', // Android only, you can override the default share sheet title
+                    url: app.urlDom,
+                    chooserTitle: 'Bizu EAD', // Android only, you can override the default share sheet title
                     //appPackageName: 'com.apple.social.facebook', // Android only, you can provide id of the App you want to share with
                     //iPadCoordinates: '0,0,0,0' //IOS only iPadCoordinates for where the popover should be point.  Format with x,y,width,height
                   };

@@ -225,9 +225,125 @@ class App {
         this.models.salvarMeusDados(form);
 
     }
+
+
+    curso(idCurso){
+
+        this.views.curso();
+        this.models.curso(idCurso);
+
+    }
+
+    // CORRIGIR O TESTE RESPONDIDO PELO USÁRIO
+    avaliacao(){
+
+            console.log("INICIANDO UMA AVALIAÇÃO");
+
+            // FORÇAR VOLTAR AO TOPO
+             window.scroll({top: 0, behavior: "smooth"});
+        
+            // FOREACH DOS RADIOS SELECIONADOS
+            var radios = document.querySelectorAll('.survey__panel input[type=radio]:checked');
+            radios.forEach(radio => {
+                
+                console.log(" ");
+                console.log("RADIO SELECIONADO");
+                console.log(radio.value);
+                console.log($(radio).attr("data-questao"));
+                console.log($(radio).attr("data-correta"));
+
+                // CORRETA
+                if($(radio).attr("data-correta")=="Correta"){
+
+                    $(`.feedback-questionario-${$(radio).attr("data-questao")}`).html(`
+                        <div class="alert alert-small rounded-s shadow-xl bg-green-dark" role="alert">
+                            <span><i class="fa fa-check color-white"></i></span>
+                            <strong class="color-white">Resposta correta!</strong>
+                            <button type="button" class="close color-white opacity-60 font-16" data-bs-dismiss="alert" aria-label="Close">×</button>
+                        </div>
+                    `);
+
+                }
+
+                // INCORRETA
+                if($(radio).attr("data-correta")=="Incorreta"){
+
+                    $(`.feedback-questionario-${$(radio).attr("data-questao")}`).html(`
+                            <div class="alert alert-small rounded-s shadow-xl bg-red-dark" role="alert">
+                                <span><i class="fa fa-times color-white"></i></span>
+                                <strong class="color-white">Resposta incorreta!</strong>
+                                <button type="button" class="close color-white opacity-60 font-16" data-bs-dismiss="alert" aria-label="Close">×</button>
+                            </div>
+                    `);
+
+                }
+
+
+            }
+        );
+
+        $(".btns-navegacao-aula").html(`
+
+                <p class="p-btn-reiniciar-teste">
+                    <button 
+                        type="button" 
+                        onclick="app.models.testeAula(${localStorage.getItem("ultimoTeste")})" 
+                        style="width:100%;" 
+                        class="btn btn-default btn-lg btn-block">
+                            Reiniciar Questionário
+                    </button> 
+                </p>
+
+                <p class="p-btn-proxima-aula">
+                    <button 
+                        type="button" 
+                        onclick="app.models.verConteudoAula(${ parseInt(localStorage.getItem("ultimaAula")) + 1})" 
+                        style="width:100%;" 
+                        class="btn btn-primary btn-lg btn-block">
+                            Próxima Aula
+                    </button> 
+                </p>
+        
+        `);
+
+    }
+
+
+    corrigirTesteBancoDeQuestoes(idQuestao){
+
+                var resposta = $(`.survey__panel_${idQuestao} input[type=radio]:checked`);
+
+                if($(resposta).attr("data-correta")=="S"){
+
+                            $(`.feedback-questionario-${idQuestao}`).html(`
+                                    <div class="alert alert-small rounded-s shadow-xl bg-green-dark" role="alert">
+                                        <span><i class="fa fa-check color-white"></i></span>
+                                        <strong class="color-white">Resposta correta!</strong>
+                                        <button type="button" class="close color-white opacity-60 font-16" data-bs-dismiss="alert" aria-label="Close">×</button>
+                                    </div>
+                            `);
+
+                }else{
+
+                            $(`.feedback-questionario-${idQuestao}`).html(`
+                                    <div class="alert alert-small rounded-s shadow-xl bg-red-dark" role="alert">
+                                        <span><i class="fa fa-times color-white"></i></span>
+                                        <strong class="color-white">Resposta incorreta!</strong>
+                                        <button type="button" class="close color-white opacity-60 font-16" data-bs-dismiss="alert" aria-label="Close">×</button>
+                                    </div>
+                            `);
+
+                }
+
+    }
+
+
+
  
 
 }
+
+
 
 
 class Sessao{

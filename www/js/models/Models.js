@@ -218,7 +218,6 @@ class Models{
 
                         var dados = JSON.parse(xhr.responseText);
 
-
                         // ALIMENTAR MEUS CURSOS
                         var meusCursos = Object.entries(dados.cursos_usuario);
 
@@ -235,7 +234,7 @@ class Models{
 
                                             return `
                                                 
-                                                <div class="curso-comprado" onclick="openCategoria('${n[1].url_em_curso}')">
+                                                <div class="curso-comprado" onclick="app.curso('${n[1].id}')">
                                                     <div class="curso-comprado-capa" style="background:url('${n[1].imagem}') #f2f2f2 no-repeat;background-size:cover;background-position:center center;">
                                                         &nbsp;
                                                     </div>
@@ -310,6 +309,667 @@ class Models{
     }
 
 
+    getInfosBancoQuestoes(){
+
+        console.log("INICIANDO FUNÇÃO PARA CARREGAR O CONTEUDO");
+
+                var idUsuario = localStorage.getItem("idUsuario");
+                var dadosUsuario = JSON.parse(localStorage.getItem("dadosUsuario"));
+
+                $(".carregando-cursos").hide();
+
+                // CONFIGURAÇÕES AJAX VANILLA
+                let xhr = new XMLHttpRequest();
+                        
+                xhr.open('GET', app.urlApi+`wp-json/bizuapi/v2/infos/?id_usuario=${idUsuario}&email_usuario=${dadosUsuario.login}`,true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                
+                // INICIO AJAX VANILLA
+                xhr.onreadystatechange = () => {
+
+                if(xhr.readyState == 4) {
+
+                    if(xhr.status == 200) {
+
+                        console.log("OPERAÇÃO REALIZADA COM SUCESSO, RETORNO DOS DADOS:");
+
+                        console.log(JSON.parse(xhr.responseText));
+
+                        var dados = JSON.parse(xhr.responseText);
+
+                        console.log(" ");
+                        console.log("TOTAL DO BANCO DE QUESTÕES");
+                        console.log(dados.banco_de_questoes.length);
+
+                        console.log(" ");
+                        console.log("TOTAL DE DISCIPLINAS");
+                        console.log(dados.disciplinas.length);
+                        $(".filtros").append(`
+
+                            <div class="form-group">
+                                <label>Disciplina</label>
+                                <select class="form-control" name="disciplinas">
+                                    <option value="">Selecione uma opção</option>
+                                    ${dados.disciplinas.map((n) => {
+
+                                        return `
+
+                                            <option value="${n.titulo}">${n.titulo}</option>
+                                            
+                                        `;
+
+                                    }).join('')}
+                                </select>
+                            </div>
+                        
+                        `);
+
+
+                        console.log(" ");
+                        console.log("TOTAL DE AREAS DE ATUAÇÃO");
+                        console.log(dados.areas_de_atuacao.length);
+                        $(".filtros").append(`
+
+                            <div class="form-group">
+                                <label>Área de atuação</label>
+                                <select class="form-control" name="areas_de_atuacao">
+                                    <option value="">Selecione uma opção</option>
+                                    ${dados.areas_de_atuacao.map((n) => {
+
+                                        return `
+
+                                            <option value="${n.titulo}">${n.titulo}</option>
+                                            
+                                        `;
+
+                                    }).join('')}
+                                </select>
+                            </div>
+                        
+                        `);
+
+                        console.log(" ");
+                        console.log("TOTAL DE INSTIUIÇÕES");
+                        console.log(dados.insticuicao.length);
+                        $(".filtros").append(`
+
+                            <div class="form-group">
+                                <label>Instituição</label>
+                                <select class="form-control" name="insticuicao">
+                                    <option value="">Selecione uma opção</option>
+                                    ${dados.insticuicao.map((n) => {
+
+                                        return `
+
+                                            <option value="${n.titulo}">${n.titulo}</option>
+                                            
+                                        `;
+
+                                    }).join('')}
+                                </select>
+                            </div>
+                        
+                        `);
+
+                        console.log(" ");
+                        console.log("TOTAL DE BANCA");
+                        console.log(dados.banca.length);
+                        $(".filtros").append(`
+
+                            <div class="form-group">
+                                <label>Banca</label>
+                                <select class="form-control" name="banca">
+                                    <option value="">Selecione uma opção</option>
+                                    ${dados.banca.map((n) => {
+
+                                        return `
+
+                                            <option value="${n.titulo}">${n.titulo}</option>
+                                            
+                                        `;
+
+                                    }).join('')}
+                                </select>
+                            </div>
+                        
+                        `);
+
+                        $(".filtros").append(`
+                                    
+                                    <p style="margin-top:20px;"> 
+
+                                        <button type="button" class="btn btn-primary btn-block" style="width:100%;position:relative;display:block;" onclick="app.models.filtrarQuestoes()">Filtrar</button>
+                                    
+                                    </p>
+                                    
+                        `);
+
+                        var contadorAlt = 0;
+
+                        $("#listaCursosListagem").html(`
+                                    
+                                ${dados.banco_de_questoes.map((n) => {
+
+                                    return `
+
+                                        <section class="survey__panel survey__panel_${n.id}" aria-hidden="false" data-index="${n.id}" data-peso="" questao="${n.id}" data-panel="">
+                                            <h2 class="survey__panel__question">
+                                                <span class="visuallyhidden"></span>${n.titulo_pergunta}
+                                            </h2>
+                                            <p>${n.texto_pergunta}</p>
+                                            <div class="survey__panel__period">
+
+                                                ${n.alternativas.map((m) => {
+
+                                                    contadorAlt++;
+
+                                                    return `
+                                                        
+                                                        <div class="form-group">
+                                                            <input data-questao="${n.id}" data-correta="${m.correta}" id="questao${n.id}Alt${contadorAlt}" type="radio" name="questao${n.id}" value="${m.texto_alternativa}" />
+                                                            <label for="questao${n.id}Alt${contadorAlt}">
+                                                                ${m.texto_alternativa}
+                                                            </label>
+                                                        </div>
+
+                                                    `;
+
+                                                }).join('')}
+                                                
+                                            </div>
+                                            <p>
+                                                <button onclick="app.corrigirTesteBancoDeQuestoes(${n.id})" class="btn btn-primary btn-block" style="position:relative;display:block;width:100%;">
+                                                    Corrigir
+                                                </button>  
+                                            </p>
+                                            <p class="feedback-message feedback-questionario-${n.id}"></p>
+                                        </section>
+                                        
+                                    `;
+
+                                }).join('')}
+                                    
+                        
+                        `);
+
+                        
+
+                    }else{
+                    
+                        console.log("SEM SUCESSO getInfosBancoQuestoes()");
+                        document.getElementById('erroGeral').click();
+
+                        console.log(JSON.parse(xhr.responseText));
+
+                    }
+
+                }
+            }; // FINAL AJAX VANILLA
+
+            /* EXECUTA */
+            xhr.send();
+
+    }
+
+
+    filtrarQuestoes(){
+
+        console.log("INICIANDO FUNÇÃO PARA CARREGAR O CONTEUDO");
+
+        $("#listaCursosListagem").html(`
+        
+                <div class="carregando-cursos text-center">
+                    <i class="fa fa-sync fa-spin me-3"></i> filtrando questões...
+                </div>
+
+        `);
+
+                var idUsuario = localStorage.getItem("idUsuario");
+                var dadosUsuario = JSON.parse(localStorage.getItem("dadosUsuario"));
+
+                
+
+                // CONFIGURAÇÕES AJAX VANILLA
+                let xhr = new XMLHttpRequest();
+                        
+                xhr.open('GET', app.urlApi+`wp-json/bizuapi/v2/infos/?id_usuario=${idUsuario}&email_usuario=${dadosUsuario.login}`,true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                
+                // INICIO AJAX VANILLA
+                xhr.onreadystatechange = () => {
+
+                if(xhr.readyState == 4) {
+
+                    if(xhr.status == 200) {
+
+                        console.log("OPERAÇÃO REALIZADA COM SUCESSO, RETORNO DOS DADOS:");
+
+                        console.log(JSON.parse(xhr.responseText));
+
+                        var dados = JSON.parse(xhr.responseText);
+
+                        $(".carregando-cursos").hide();
+
+                        var contadorAlt = 0;
+
+                        $("#listaCursosListagem").html(`
+                                    
+                                ${dados.banco_de_questoes.map((n) => {
+
+                                    return `
+
+                                        <section class="survey__panel survey__panel_${n.id}" aria-hidden="false" data-index="${n.id}" data-peso="" questao="${n.id}" data-panel="">
+                                            <h2 class="survey__panel__question">
+                                                <span class="visuallyhidden"></span>${n.titulo_pergunta}
+                                            </h2>
+                                            <p>${n.texto_pergunta}</p>
+                                            <div class="survey__panel__period">
+
+                                                ${n.alternativas.map((m) => {
+
+                                                    contadorAlt++;
+
+                                                    return `
+                                                        
+                                                        <div class="form-group">
+                                                            <input data-questao="${n.id}" data-correta="${m.correta}" id="questao${n.id}Alt${contadorAlt}" type="radio" name="questao${n.id}" value="${m.texto_alternativa}" />
+                                                            <label for="questao${n.id}Alt${contadorAlt}">
+                                                                ${m.texto_alternativa}
+                                                            </label>
+                                                        </div>
+
+                                                    `;
+
+                                                }).join('')}
+                                                
+                                            </div>
+                                            <p>
+                                                <button onclick="app.corrigirTesteBancoDeQuestoes(${n.id})" class="btn btn-primary btn-block" style="position:relative;display:block;width:100%;">
+                                                    Corrigir
+                                                </button>  
+                                            </p>
+                                            <p class="feedback-message feedback-questionario-${n.id}"></p>
+                                        </section>
+                                        
+                                    `;
+
+                                }).join('')}
+                                    
+                        
+                        `);
+
+                    }else{
+                    
+                        console.log("SEM SUCESSO filtrarQuestoes()");
+                        document.getElementById('erroGeral').click();
+
+                        console.log(JSON.parse(xhr.responseText));
+
+                    }
+
+                }
+            }; // FINAL AJAX VANILLA
+
+            /* EXECUTA */
+            xhr.send();
+
+    }
+
+
+    curso(idCurso){
+
+        var login = localStorage.getItem("loginDB");
+        var senha = localStorage.getItem("senhaDB");
+
+        var params = "token="+app.token+
+                        "&login="+login+"&senha="+senha+"&curso="+idCurso;
+
+        console.log(params);
+
+                        // CONFIGURAÇÕES AJAX VANILLA
+                        let xhr = new XMLHttpRequest();
+                                        
+                        xhr.open('POST', app.urlApi+`wp-json/bizuapi/v2/curso/`,true);
+                        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                        
+                        // INICIO AJAX VANILLA
+                        xhr.onreadystatechange = () => {
+
+                        if(xhr.readyState == 4) {
+
+                            if(xhr.status == 200) {
+
+                                console.log("OPERAÇÃO REALIZADA COM SUCESSO, RETORNO DOS DADOS:");
+
+                                console.log(JSON.parse(xhr.responseText));
+
+                                var dados = JSON.parse(xhr.responseText);
+
+                                localStorage.setItem("dadosCurso", JSON.stringify(dados));
+                                localStorage.setItem("ultimoCurso",idCurso);
+
+                                $(".carregando-cursos").hide();
+
+                                console.log("QUANTIDADE DE CONTEÚDOS DO CURSO");
+                                console.log(dados.curso[0].conteudo_do_curso.length);
+
+                                var contadorAula = -1;
+                               
+                                $("#conteudoPrincipalPagina").html(`
+                                
+                                        <div class=" mx-0">
+                                            <div class="content titulo-e-resumo-curso">
+                                                <h1><a href="#" onclick="location.reload();"><i class="fa fa-angle-left"></i></a> ${dados.curso[0].titulo}</h1>
+                                                <p>${dados.curso[0].resumo_do_curso}</p>
+                                                <img src="${dados.curso[0].imagem_capa}" style="width:100%;height:auto;" />
+                                            </div>
+                                        </div>
+
+                                        <div class="conteudo-curso-aulas"> 
+
+                                                ${dados.curso[0].conteudo_do_curso.map((n) => {
+
+                                                    contadorAula++;
+
+                                                    localStorage.setItem("maxNumAula",contadorAula);
+                
+                                                    return `
+                                                        <div class="conteudo-curso-aula">
+                                                            <div class="row">
+                                                                <div class="col-2 play-aula">
+                                                                    <a href="" onclick="app.models.verConteudoAula(${contadorAula})">
+                                                                        <img src="images/3669296_circle_filled_play_ic_icon.svg" />
+                                                                    </a>
+                                                                </div>
+                                                                <div class="col-10 conteudo-aula" onclick="app.models.verConteudoAula(${contadorAula})">
+                                                                     <h3>${n.nome_da_aula}</h3>
+                                                                     <p>${n.resumo_da_aula}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    `;
+
+                                                    
+
+                                                }).join('')}
+                                        
+                                        </div>
+                                
+                                `);
+
+                            }else{
+                            
+                                console.log("SEM SUCESSO curso()");
+                                document.getElementById('erroGeral').click();
+
+                                console.log(JSON.parse(xhr.responseText));
+
+                            }
+
+                        }
+                    }; // FINAL AJAX VANILLA
+
+                    /* EXECUTA */
+                    xhr.send(params);
+
+    }
+
+    verConteudoAula(idAula){
+
+        var idCurso = localStorage.getItem("ultimoCurso");
+        var dados   = JSON.parse(localStorage.getItem("dadosCurso"));
+
+        localStorage.setItem("ultimaAula",idAula);
+
+        var controle = 0;
+        var aula;
+
+        // FORÇAR VOLTAR AO TOPO
+        window.scroll({top: 0, behavior: "smooth"})
+
+        // CAPTURAR CONTEUDO DA AULA
+        for(let i = 0;i<dados.curso[0].conteudo_do_curso.length;i++){
+
+            // MATCH AULA
+            if(i==idAula){
+
+                aula = dados.curso[0].conteudo_do_curso[i];
+
+                console.log("CONTEUDO DA AULA");
+                console.log(aula);
+
+                break;
+
+            }
+
+        }
+
+        // ANALISAR IMAGEM DA AULA
+        var imgAula = "";
+        if(aula.imagem_explanacao_aula!="" && aula.imagem_explanacao_aula!=false && aula.imagem_explanacao_aula!=null){
+            imgAula = `<img src="${aula.imagem_explanacao_aula}" style="width:100%;height:auto;" />`;
+        }
+
+        // ANALISAR VIDEO DA AULA
+        var videoAula = "";
+        if(aula.video_da_aula!="" && aula.video_da_aula!=false && aula.video_da_aula!=null){
+            videoAula = aula.video_da_aula;
+        }
+
+        var btnNextAula = "";
+
+        if(idAula<localStorage.getItem("maxNumAula")){
+
+            btnNextAula = `<a href="" onclick="app.models.verConteudoAula(${idAula+1})" class="btn btn-primary btn-block">Próxima Aula</a>`;
+
+        }else{
+                
+            btnNextAula = `<p>&nbsp;</p><a href="" onclick="app.curso(${idCurso})" class="btn btn-primary btn-block">Voltar ao início do curso</a>`;
+    
+        }
+
+        if(aula.arquivos_da_aula==false){
+            aula.arquivos_da_aula = [];
+        }
+
+        var btnTesteAula = "";
+
+        if(aula.teste_da_aula!=false && aula.teste_da_aula!=null){
+
+            btnTesteAula = `<a href="#" onclick="app.models.testeAula(${aula.teste_da_aula})" class="btn btn-default btn-block">Iniciar Questionário da Aula</a>`;
+
+        }
+
+        // EXIBIR O CONTEÚDO DA AULA
+        $("#conteudoPrincipalPagina").html(`
+                                
+                    <div class=" mx-0">
+                        <div class="content titulo-e-resumo-curso">
+                            <h1><a href="#" onclick="app.curso(${idCurso});"><i class="fa fa-angle-left"></i></a> 
+                                ${aula.nome_da_aula}
+                                <small>${dados.curso[0].titulo}:</small>
+                            </h1>
+                            <p>${aula.resumo_da_aula}</p>
+                        </div>
+                        
+                        <div class="content conteudo-aula-single">
+                            <p>${imgAula}</p>
+                            ${videoAula}
+                            ${aula.conteudo_da_aula}
+
+                            <div class="arquivos-para-download">
+
+                                    ${aula.arquivos_da_aula.map((n) => {
+
+                                        return `
+                                            
+                                            <div class="arquivo-da-aula" onclick="openArquivo('${n.link}')">
+                                                <p>
+                                                  <i class="fa fa-download"></i> Baixar arquivo: ${n.nome_do_arquivo}
+                                                </p>
+                                            </div>
+
+                                        `;
+
+                                    }).join('')}
+
+                            </div>
+                            
+                            <div class="btns-teste">
+                                ${btnTesteAula}
+                            </div>
+                            <div class="btns-navegacao-aula">
+                                ${btnNextAula}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+        `);
+
+
+    }
+
+
+    testeAula(idTeste){
+
+        var idCurso = localStorage.getItem("ultimoCurso");
+        var dados   = JSON.parse(localStorage.getItem("dadosCurso"));
+
+        var idAula = localStorage.getItem("ultimaAula",idAula);
+
+
+
+        var controle = 0;
+        var aula;
+
+        // FORÇAR VOLTAR AO TOPO
+        window.scroll({top: 0, behavior: "smooth"})
+
+        // CAPTURAR CONTEUDO DA AULA
+        for(let i = 0;i<dados.curso[0].conteudo_do_curso.length;i++){
+
+            // MATCH AULA
+            if(i==idAula){
+
+                aula = dados.curso[0].conteudo_do_curso[i];
+
+                console.log("CONTEUDO DA AULA");
+                console.log(aula);
+
+                break;
+
+            }
+
+        }
+
+        var teste;
+
+        // OBTER DADOS DO TESTE
+        for(let i = 0;i<dados.testes.length;i++){
+
+            if(dados.testes[i].id_teste == idTeste){
+                
+                console.log("CONTEUDO DO TESTE SELECIONADO");
+                console.log(dados.testes[i]);
+
+                teste = dados.testes[i];
+                localStorage.setItem("ultimoTeste",idTeste);
+                break;
+            
+            }
+
+        }
+
+         var contador = 0;
+         var contadorAlt = 0;
+
+         // EXIBIR O CONTEÚDO DA AULA
+         $("#conteudoPrincipalPagina").html(`
+                                
+                <div class=" mx-0">
+                    <div class="content titulo-e-resumo-curso">
+                        <h1><a href="#" onclick="app.models.verConteudoAula(${idAula})"><i class="fa fa-angle-left"></i></a> 
+                            Questionário ${aula.nome_da_aula}
+                            <small>${dados.curso[0].titulo}:</small>
+                        </h1>
+                        <p>${aula.resumo_da_aula}</p>
+                    </div>
+
+                    <section class="pesquisa">
+
+                        <div class="content conteudo-teste">
+
+
+                                        ${teste.questoes_do_teste.map((n) => {
+
+                                            contador++;
+
+                                            return `
+                                                
+                                                    <!-- PERGUNTA ${contador} -->
+                                                    <section class="survey__panel" aria-hidden="false" data-index="${contador}" data-peso="${n.peso_da_pergunta}" questao="${contador}" data-panel="">
+                                                        <h2 class="survey__panel__question">
+                                                            <span class="visuallyhidden">Questão ${contador} de ${teste.questoes_do_teste.length} </span>${n.titulo_da_pergunta}
+                                                        </h2>
+                                                        <p>${n.texto_apoio_da_pergunta}</p>
+                                                        <div class="survey__panel__period">
+
+                                                            ${n.alternativas.map((m) => {
+
+                                                                contadorAlt++;
+
+                                                                return `
+                                                                    
+                                                                    <div class="form-group">
+                                                                        <input data-questao="${contador}" data-correta="${m.correta_ou_incorreta}" id="questao${contador}Alt${contadorAlt}" type="radio" name="questao${contador}" value="${m.texto_da_alternativa}" />
+                                                                        <label for="questao${contador}Alt${contadorAlt}">
+                                                                            ${m.texto_da_alternativa}
+                                                                        </label>
+                                                                    </div>
+                    
+                                                                `;
+                    
+                                                            }).join('')}
+                                                            
+                                                        </div>
+                                                        <p class="feedback-message feedback-questionario-${contador}"></p>
+                                                    </section>
+                                                    <!-- PERGUNTA ${contador} -->
+
+                                            `;
+
+                                        }).join('')}
+
+                                        <p>&nbsp;</p>
+
+                                        <div class="btns-navegacao-aula">
+                                            <button 
+                                                type="button" 
+                                                onclick="app.avaliacao()" 
+                                                style="width:100%;" 
+                                                class="btn btn-primary btn-lg btn-block">
+                                                    Corrigir questionário
+                                            </button>    
+                                        </div>
+
+                            
+
+                        </div>
+
+                    </section>
+                    
+                </div>
+
+
+                
+        `);
+
+
+
+
+    }
 
 
     enviarCobrancaPix(form){
