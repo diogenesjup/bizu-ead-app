@@ -972,6 +972,144 @@ class Models{
     }
 
 
+
+    certificados(){
+
+        var email_usuario = localStorage.getItem("loginDB");
+        var id_usuario    = localStorage.getItem("idUsuario");
+
+        var params = "token="+app.token+
+                        "&user_id="+id_usuario+"&user_email="+email_usuario;
+
+        console.log(params);
+
+                        // CONFIGURAÇÕES AJAX VANILLA
+                        let xhr = new XMLHttpRequest();
+                                        
+                        xhr.open('POST', app.urlApi+`wp-json/bizuapi/v2/certificados/`,true);
+                        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                        
+                        // INICIO AJAX VANILLA
+                        xhr.onreadystatechange = () => {
+
+                        if(xhr.readyState == 4) {
+
+                            if(xhr.status == 200) {
+
+                                console.log("OPERAÇÃO REALIZADA COM SUCESSO, RETORNO DOS DADOS:");
+
+                                console.log(JSON.parse(xhr.responseText));
+
+                                var dados = JSON.parse(xhr.responseText);
+
+                                $(".carregando-cursos").hide();
+
+                                console.log("QUANTIDADE DE CONTEÚDOS DO CURSO");
+                                console.log(dados.certificados.length);
+
+                                if(dados.certificados.length == 0){
+
+                                    $("#conteudoPrincipalPagina").html(`
+                                        <p style="text-align:center;">Você ainda não tem nenhum certificado disponível</p>
+                                    `);
+
+                                }else{
+
+                                    $("#conteudoPrincipalPagina").html(`
+
+                                            <h1>Certificados disponíveis</h1>
+                                            <p>&nbsp;</p>
+
+                                            ${dados.certificados.map((n) => {
+                                                
+                                                return `
+                                                    <div class="conteudo-curso-aula">
+                                                        <div class="row">
+                                                            <div class="col-12" onclick="app.models.verConteudoAula(${contadorAula})">
+                                                                <h3>${n.titulo}</h3>
+                                                                <p>
+                                                                    <a class="btn btn-primary" style="display:block;" onclick="openCategoria('${n.url}')" href="" title="${n.certificados_liberado}">
+                                                                         ${n.certificados_liberado}
+                                                                    </a>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                `;
+                                               
+                                            }).join('')}
+                                    
+                                    
+                                    `);
+
+                                }
+
+                                var contadorAula = -1;
+                               
+                                $("#conteudoPrincipalPagina").html(`
+                                
+                                        <div class=" mx-0">
+                                            <div class="content titulo-e-resumo-curso">
+                                                <h1><a href="#" onclick="location.reload();"><i class="fa fa-angle-left"></i></a> ${dados.curso[0].titulo}</h1>
+                                                <p>${dados.curso[0].resumo_do_curso}</p>
+                                                <img src="${dados.curso[0].imagem_capa}" style="width:100%;height:auto;" />
+                                            </div>
+                                        </div>
+
+                                        <div class="conteudo-curso-aulas"> 
+
+                                                ${dados.curso[0].conteudo_do_curso.map((n) => {
+
+                                                    contadorAula++;
+
+                                                    localStorage.setItem("maxNumAula",contadorAula);
+                
+                                                    return `
+                                                        <div class="conteudo-curso-aula">
+                                                            <div class="row">
+                                                                <div class="col-2 play-aula">
+                                                                    <a href="" onclick="app.models.verConteudoAula(${contadorAula})">
+                                                                        <img src="images/3669296_circle_filled_play_ic_icon.svg" />
+                                                                    </a>
+                                                                </div>
+                                                                <div class="col-10 conteudo-aula" onclick="app.models.verConteudoAula(${contadorAula})">
+                                                                     <h3>${n.nome_da_aula}</h3>
+                                                                     <p>${n.resumo_da_aula}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    `;
+
+                                                    
+
+                                                }).join('')}
+                                        
+                                        </div>
+                                
+                                `);
+
+                            }else{
+                            
+                                console.log("SEM SUCESSO curso()");
+                                document.getElementById('erroGeral').click();
+
+                                console.log(JSON.parse(xhr.responseText));
+
+                            }
+
+                        }
+                    }; // FINAL AJAX VANILLA
+
+                    /* EXECUTA */
+                    xhr.send(params);
+
+    }
+
+
+
+
+
+
     enviarCobrancaPix(form){
 
                 var dadosForm = $(form).serialize();

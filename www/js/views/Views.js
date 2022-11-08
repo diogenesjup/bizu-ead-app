@@ -41,7 +41,17 @@ class Views{
 
     }
 
+    certificados(){
 
+      $("#conteudoPrincipalPagina").html(`
+       
+            <div class="carregando-cursos text-center">
+               <i class="fa fa-sync fa-spin me-3"></i> carregando certificados
+            </div>
+       
+       `);
+
+    }
 
     viewPrincipal(){
 

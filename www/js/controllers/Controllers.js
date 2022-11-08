@@ -234,6 +234,13 @@ class App {
 
     }
 
+    certificados(){
+
+        this.views.certificados();
+        this.models.certificados();
+
+    }
+
     // CORRIGIR O TESTE RESPONDIDO PELO USÁRIO
     avaliacao(){
 
